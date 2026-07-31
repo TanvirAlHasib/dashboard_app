@@ -2,13 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Textformfieldwidget extends StatelessWidget {
-  const Textformfieldwidget({super.key, required String this.hintText, required IconData this.icon});
+  const Textformfieldwidget({super.key, this.hintText = "",
+    required this.icon,
+    this.maxLines = 1,
+    this.textInputType = TextInputType.text
+  });
   final String hintText;
   final IconData icon;
+  final int maxLines;
+  final TextInputType textInputType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.text,
+      keyboardType: textInputType,
+      maxLines: maxLines,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },

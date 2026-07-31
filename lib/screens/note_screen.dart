@@ -1,5 +1,6 @@
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
+import 'package:dashboard/widgets/textFormFieldWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,37 +20,7 @@ class NoteScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: .start,
           children: [
-            TextFormField(
-              controller: searchController,
-              keyboardType: TextInputType.text,
-              onTapOutside: (event) {
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade600,
-                      strokeAlign: BorderSide.strokeAlignOutside
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                      strokeAlign: BorderSide.strokeAlignOutside
-                  ),
-                ),
-                prefixIcon: Icon(CupertinoIcons.search),
-                hint: Text("Search notes..."),
-              ),
-              style: TextStyle(
-                fontSize: 16
-              ),
-            ),
+            Textformfieldwidget(hintText: "Search notes...", icon: CupertinoIcons.search),
 
             const SizedBox(
               height: 20,
@@ -145,6 +116,7 @@ class NoteScreen extends StatelessWidget {
   // appbar starts here
   AppBar MyAppBar(BuildContext context){
     return AppBar(
+      backgroundColor: Theme.of(context).cardColor,
       elevation: 3,
       centerTitle: true,
       title: Text("Notes", style: TextStyle(
