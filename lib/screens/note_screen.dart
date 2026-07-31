@@ -59,10 +59,10 @@ class NoteScreen extends StatelessWidget {
               child: Row(
                 spacing: 2,
                 children: [
-                  Cardwidget(text: "All Notes"),
-                  Cardwidget(text: "Work"),
-                  Cardwidget(text: "Personal"),
-                  Cardwidget(text: "Ideas"),
+                  InkWell(child: Cardwidget(text: "All Notes")),
+                  InkWell(child: Cardwidget(text: "Work")),
+                  InkWell(child: Cardwidget(text: "Personal")),
+                  InkWell(child: Cardwidget(text: "Ideas")),
                 ],
               ),
             ),
