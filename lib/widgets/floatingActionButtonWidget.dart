@@ -32,7 +32,39 @@ class Floatingactionbuttonwidget extends StatelessWidget {
                   height: 13,
                 ),
                 ///TODO later i will fix the prefix icon issue in multiline textFormField by row widget
-                Textformfieldwidget(icon: Icons.subtitles, maxLines: 4, textInputType: TextInputType.multiline,)
+                Textformfieldwidget(icon: Icons.subtitles, maxLines: 4, textInputType: TextInputType.multiline,),
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            textStyle: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight(600)
+                            )
+                          ),
+                          child: Text("Cancel")
+                      ),
+                    ),
+                    Expanded(
+                      child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                              textStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight(600)
+                              )
+                          ),
+                          child: Text("Add")
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           );
