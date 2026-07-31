@@ -101,7 +101,20 @@ class NoteScreen extends StatelessWidget {
                   Text("Client requested an updated timeline by Wednesday. They prefer a darker color palette for the next iteration of the prototype.",
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.delete_forever_outlined, color: Colors.red, size: 34,)
+                      ),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.edit_note_outlined, color: Colors.green.shade500, size: 34,)
+                      ),
+                    ],
                   ),
                 ],
               ),
