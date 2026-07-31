@@ -12,7 +12,7 @@ class AppRoutes {
           builder: (context, state) => HomeScreen(),
         ),
         GoRoute(
-          path: "",
+          path: "/note",
           name: "note",
           builder: (context, state) => NoteScreen(),
         ),
