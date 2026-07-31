@@ -1,3 +1,4 @@
+import 'package:dashboard/routes/app_routes.dart';
 import 'package:dashboard/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Dashboard App',
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomeScreen(),
+      routerConfig: AppRoutes().appRoute,
     );
   }
 }
