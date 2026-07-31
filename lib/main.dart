@@ -1,5 +1,6 @@
 import 'package:dashboard/routes/app_routes.dart';
 import 'package:dashboard/screens/home_screen.dart';
+import 'package:dashboard/themes/light.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,9 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Dashboard App',
       darkTheme: ThemeData.dark(),
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: lightTheme,
       routerConfig: AppRoutes().appRoute,
     );
   }
