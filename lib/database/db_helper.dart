@@ -20,8 +20,7 @@ class DbHelper {
   static final String CATEGORY = "category";
   Database? db;
 
-  static late final List<NoteModel> noteList;
-
+  // checking do I have database or not
   Future<Database> getDb() async{
     if(db != null){
       return db!;
@@ -31,6 +30,7 @@ class DbHelper {
     }
   }
 
+  //creating database if there is no database
   Future<Database> openDB() async{
     Directory getDirectory = await getApplicationDocumentsDirectory();
     String path = join(getDirectory.path, "noteDB");
