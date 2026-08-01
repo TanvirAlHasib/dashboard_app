@@ -1,6 +1,7 @@
 import 'package:dashboard/widgets/textFormFieldWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Floatingactionbuttonwidget extends StatelessWidget {
   const Floatingactionbuttonwidget({super.key});
@@ -10,10 +11,11 @@ class Floatingactionbuttonwidget extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: Theme.of(context).cardColor,
       onPressed: () {
-        showModalBottomSheet(context: context, builder: (context) {
+        showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.all(15),
+            height: MediaQuery.of(context).size.height * 0.5 + MediaQuery.of(context).viewInsets.bottom * 0.8,
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(8),
@@ -41,7 +43,9 @@ class Floatingactionbuttonwidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pop();
+                          },
                           style: OutlinedButton.styleFrom(
                             textStyle: TextStyle(
                               fontSize: 17,
