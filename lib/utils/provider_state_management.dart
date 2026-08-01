@@ -13,8 +13,20 @@ class ProviderStateManagement extends ChangeNotifier {
     List<Map<String, dynamic>> notesMap = await database.query(DbHelper.TABLE_NOTE);
     notesMap.map((note){
       noteList.add(NoteModel.fromMap(note));
-      notifyListeners();
     });
+    notifyListeners();
+  }
+
+  // insert data to the note table
+  Future<void> insertNote(NoteModel note) async{
+    Database database = await DbHelper.getInstance.getDb();
+    database.insert(DbHelper.TABLE_NOTE, {
+      DbHelper.TITLE: note.title,
+      DbHelper.DESCRIPTION: note.description,
+      DbHelper.CATEGORY: note.category.isEmpty ? "All Notes" : note.category,
+      DbHelper.DATE_TIME : note.dateTime ?? DateTime.now().toLocal(),
+    });
+    notifyListeners();
   }
 
 }
