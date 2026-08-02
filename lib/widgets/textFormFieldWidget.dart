@@ -5,12 +5,14 @@ class Textformfieldwidget extends StatelessWidget {
   const Textformfieldwidget({super.key, this.hintText = "",
     required this.icon,
     this.maxLines = 1,
-    this.textInputType = TextInputType.text
+    this.textInputType = TextInputType.text,
+    required this.textEditingController,
   });
   final String hintText;
   final IconData icon;
   final int maxLines;
   final TextInputType textInputType;
+  final TextEditingController textEditingController;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -43,6 +45,11 @@ class Textformfieldwidget extends StatelessWidget {
       style: TextStyle(
           fontSize: 16
       ),
+      validator: (value) {
+        if(value == null || value.isEmpty){
+          return "Title field can not be empty";
+        }
+      },
     );
   }
 }
