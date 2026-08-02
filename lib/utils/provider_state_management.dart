@@ -5,14 +5,20 @@ import 'package:sqflite/sqflite.dart';
 
 class ProviderStateManagement extends ChangeNotifier {
 
-  static late final List<NoteModel> noteList;
+  ProviderStateManagement(){
+    getAllData();
+  }
+
+  final List<NoteModel> _noteList = [];
+  List<NoteModel> get getNoteList => _noteList;
 
   // fetching data from database
   Future<void> getAllData() async{
     Database database = await DbHelper.getInstance.getDb();
     List<Map<String, dynamic>> notesMap = await database.query(DbHelper.TABLE_NOTE);
-    notesMap.map((note){
-      noteList.add(NoteModel.fromMap(note));
+    _noteList.clear();
+    notesMap.forEach((note){
+      _noteList.add(NoteModel.fromMap(note));
     });
     notifyListeners();
   }
@@ -23,10 +29,10 @@ class ProviderStateManagement extends ChangeNotifier {
     database.insert(DbHelper.TABLE_NOTE, {
       DbHelper.TITLE: note.title,
       DbHelper.DESCRIPTION: note.description,
-      DbHelper.CATEGORY: note.category.isEmpty ? "All Notes" : note.category,
-      DbHelper.DATE_TIME : note.dateTime ?? DateTime.now().toLocal().toString(),
+      DbHelper.CATEGORY: note.category.isEmpty ? "N/A" : note.category,
+      DbHelper.DATE_TIME : note.dateTime,
     });
-    notifyListeners();
+    await getAllData();
   }
 
 }
