@@ -24,7 +24,7 @@ class ProviderStateManagement extends ChangeNotifier {
       DbHelper.TITLE: note.title,
       DbHelper.DESCRIPTION: note.description,
       DbHelper.CATEGORY: note.category.isEmpty ? "All Notes" : note.category,
-      DbHelper.DATE_TIME : note.dateTime ?? DateTime.now().toLocal(),
+      DbHelper.DATE_TIME : note.dateTime ?? DateTime.now().toLocal().toString(),
     });
     notifyListeners();
   }
