@@ -35,4 +35,11 @@ class ProviderStateManagement extends ChangeNotifier {
     await getAllData();
   }
 
+  // delete data from the map
+  void deleteNote(int id) async{
+    Database database = await DbHelper.getInstance.getDb();
+    await database.delete(DbHelper.TABLE_NOTE, where: "${DbHelper.ID} == ?", whereArgs: [id]);
+    getAllData();
+  }
+
 }
