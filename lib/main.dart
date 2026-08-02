@@ -1,10 +1,17 @@
 import 'package:dashboard/routes/app_routes.dart';
-import 'package:dashboard/screens/home_screen.dart';
 import 'package:dashboard/themes/light.dart';
+import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => ProviderStateManagement(),)
+        ],
+      child: const MyApp())
+  );
 }
 
 class MyApp extends StatelessWidget {
