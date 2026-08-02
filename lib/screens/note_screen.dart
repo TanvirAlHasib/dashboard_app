@@ -126,7 +126,10 @@ class NoteScreen extends StatelessWidget {
                             mainAxisAlignment: .spaceBetween,
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async{
+                                    int id = noteList[index].id;
+                                    await context.read<ProviderStateManagement>().deleteNote(id);
+                                  },
                                   icon: Icon(Icons.delete_forever_rounded, color: Colors.red, size: 31,)
                               ),
                               IconButton(
