@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class Floatingactionbuttonwidget extends StatelessWidget {
-  const Floatingactionbuttonwidget({super.key});
+  Floatingactionbuttonwidget({super.key});
+
+  final TextEditingController titeController = TextEditingController();
+  final TextEditingController descriptController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +32,17 @@ class Floatingactionbuttonwidget extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Textformfieldwidget(icon: Icons.title),
+                Textformfieldwidget(icon: Icons.title,
+                  textEditingController: titeController,
+                ),
                 const SizedBox(
                   height: 13,
                 ),
                 ///TODO later i will fix the prefix icon issue in multiline textFormField by row widget
-                Textformfieldwidget(icon: Icons.subtitles, maxLines: 4, textInputType: TextInputType.multiline,),
+                Textformfieldwidget(icon: Icons.subtitles, maxLines: 4,
+                  textInputType: TextInputType.multiline,
+                  textEditingController: descriptController,
+                ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -57,7 +65,9 @@ class Floatingactionbuttonwidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+                          },
                           style: OutlinedButton.styleFrom(
                               textStyle: TextStyle(
                                   fontSize: 17,
