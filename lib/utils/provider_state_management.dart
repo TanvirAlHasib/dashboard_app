@@ -42,4 +42,15 @@ class ProviderStateManagement extends ChangeNotifier {
     getAllData();
   }
 
+  Future<void> updateNote(NoteModel note) async{
+    Database database = await DbHelper.getInstance.getDb();
+    database.update(DbHelper.TABLE_NOTE, {
+      DbHelper.TITLE: note.title,
+      DbHelper.DESCRIPTION: note.description,
+      DbHelper.CATEGORY: note.category,
+      DbHelper.DATE_TIME: note.dateTime
+    }, where: "${DbHelper.ID} == ?", whereArgs: [note.id]);
+    getAllData();
+  }
+
 }
