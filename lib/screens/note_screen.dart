@@ -1,5 +1,6 @@
 import 'package:dashboard/models/note_model.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
+import 'package:dashboard/utils/showModalBottomSheet.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:dashboard/widgets/textFormFieldWidget.dart';
@@ -11,6 +12,7 @@ class NoteScreen extends StatelessWidget {
   NoteScreen({super.key});
 
   final TextEditingController searchController = TextEditingController();
+  Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget();
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +135,20 @@ class NoteScreen extends StatelessWidget {
                                   icon: Icon(Icons.delete_forever_rounded, color: Colors.red, size: 31,)
                               ),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    String title = noteList[index].title;
+                                    String desc = noteList[index].description;
+                                    _floatingactionbuttonwidget.titleController.text = title;
+                                    _floatingactionbuttonwidget.descriptController.text = desc;
+                                    Showmodalbottomsheet.id = noteList[index].id;
+                                    Showmodalbottomsheet.category = noteList[index].category;
+                                    Showmodalbottomsheet().show_ModalBottomSheet(
+                                        context: context,
+                                        titleController: _floatingactionbuttonwidget.titleController,
+                                        descriptController: _floatingactionbuttonwidget.descriptController,
+                                      flag: false
+                                    );
+                                  },
                                   icon: Icon(Icons.edit_note_outlined, color: Colors.green.shade500, size: 34,)
                               ),
                             ],
