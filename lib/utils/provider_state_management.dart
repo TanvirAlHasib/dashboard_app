@@ -78,7 +78,7 @@ class ProviderStateManagement extends ChangeNotifier {
     Database database = await DbHelper.getInstance.getDb();
     _noteList.clear();
     List<Map<String, dynamic>> searchNoteMap = await database.query(DbHelper.TABLE_NOTE,
-        where: "${DbHelper.TITLE} == ?", whereArgs: [title]);
+        where: "${DbHelper.TITLE} like ?", whereArgs: ['%$title%']);
     searchNoteMap.forEach((note) {
       _noteList.add(NoteModel.fromMap(note));
     },);
