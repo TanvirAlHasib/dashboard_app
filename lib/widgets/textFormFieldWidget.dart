@@ -1,5 +1,7 @@
+import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Textformfieldwidget extends StatelessWidget {
   const Textformfieldwidget({super.key, this.hintText = "",
@@ -7,7 +9,9 @@ class Textformfieldwidget extends StatelessWidget {
     this.maxLines = 1,
     this.textInputType = TextInputType.text,
     required this.textEditingController,
+    this.usedIn
   });
+  final String? usedIn;
   final String hintText;
   final IconData icon;
   final int maxLines;
@@ -16,6 +20,13 @@ class Textformfieldwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: usedIn != null ? (usedIn!.contains("search") ? (value) async{
+        if(value.isEmpty){
+          await context.read<ProviderStateManagement>().getAllData();
+        } else{
+          await context.read<ProviderStateManagement>().searchNote(value);
+        }
+      } : null) : null,
       controller: textEditingController,
       keyboardType: textInputType,
       maxLines: maxLines,

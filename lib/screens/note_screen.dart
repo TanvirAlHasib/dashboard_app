@@ -27,6 +27,7 @@ class NoteScreen extends StatelessWidget {
           children: [
             Textformfieldwidget(hintText: "Search notes...",
               icon: CupertinoIcons.search, textEditingController: searchController,
+              usedIn: "search",
             ),
 
             const SizedBox(
