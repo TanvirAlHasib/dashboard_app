@@ -29,7 +29,7 @@ class NoteScreen extends StatelessWidget {
             ),
 
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
 
             SingleChildScrollView(
@@ -37,21 +37,41 @@ class NoteScreen extends StatelessWidget {
               child: Row(
                 spacing: 2,
                 children: [
-                  InkWell(child: Cardwidget(text: "All Notes")),
-                  InkWell(child: Cardwidget(text: "Work")),
-                  InkWell(child: Cardwidget(text: "Personal")),
-                  InkWell(child: Cardwidget(text: "Ideas")),
+                  InkWell(
+                    onTap: () async{
+                      await context.read<ProviderStateManagement>().getNoteByCategory("All Notes");
+                    },
+                    child: Cardwidget(text: "All Notes")
+                  ),
+                  InkWell(
+                    onTap: () async{
+                      await context.read<ProviderStateManagement>().getNoteByCategory("Work");
+                    },
+                    child: Cardwidget(text: "Work")
+                  ),
+                  InkWell(
+                    onTap: () async{
+                      await context.read<ProviderStateManagement>().getNoteByCategory("Personal");
+                    },
+                    child: Cardwidget(text: "Personal")
+                  ),
+                  InkWell(
+                    onTap: () async{
+                      await context.read<ProviderStateManagement>().getNoteByCategory("Ideas");
+                    },
+                    child: Cardwidget(text: "Ideas")
+                  ),
                 ],
               ),
             ),
 
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
 
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.only(top: 15, right: 15, left: 15),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
