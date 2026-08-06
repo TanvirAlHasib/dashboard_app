@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TaskScreen extends StatelessWidget {
-  const TaskScreen({super.key});
+  TaskScreen({super.key});
+
+  bool checkBoxValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class TaskScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: MyAppBar(context),
       body: Container(
-        padding: const EdgeInsets.all(13),
+        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 22),
         child: Column(
           children: [
             Container(
@@ -59,6 +61,63 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+
+            const SizedBox(
+              height: 30,
+            ),
+
+            Row(
+              spacing: 13,
+              children: [
+                Icon(Icons.calendar_month, color: Colors.blue.shade800,),
+                Text(
+                  "Today's Tasks",
+                  style: TextStyle(
+                    fontWeight: FontWeight(500),
+                    fontSize: 20
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            // starts task here
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Color(0XFFE5EEFF)
+              ),
+              child: ListTile(
+                leading: Checkbox.adaptive(value: checkBoxValue, onChanged: (value) {
+                  checkBoxValue = value!;
+                },),
+                title: Text("Review Q3 Financial Reports", style: TextStyle(
+                  height: 2,
+                  fontWeight: FontWeight(500)
+                ),),
+                horizontalTitleGap: 4,
+                subtitle: Column(
+                  spacing: 10,
+                  children: [
+                    Text("Check discrepancies in the marketing budget before the 2 PM meeting."),
+                    Row(
+                      spacing: 7,
+                      children: [
+                        Icon(CupertinoIcons.clock, size: 15, color: Colors.grey.shade600,),
+                        Text("2.00 PM", style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 12
+                        ),)
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
           ],
         ),
