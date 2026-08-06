@@ -1,5 +1,6 @@
 import 'package:dashboard/screens/home_screen.dart';
 import 'package:dashboard/screens/note_screen.dart';
+import 'package:dashboard/screens/task_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -15,6 +16,11 @@ class AppRoutes {
           path: "/note",
           name: "note",
           builder: (context, state) => NoteScreen(),
+        ),
+        GoRoute(
+          path: "/task",
+          name: "task",
+          builder: (context, state) => TaskScreen(),
         ),
       ],
   );
