@@ -1,6 +1,7 @@
 import 'package:dashboard/models/note_model.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:dashboard/utils/showModalBottomSheet.dart';
+import 'package:dashboard/utils/toast.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:dashboard/widgets/textFormFieldWidget.dart';
@@ -148,9 +149,12 @@ class NoteScreen extends StatelessWidget {
                             mainAxisAlignment: .spaceBetween,
                             children: [
                               IconButton(
-                                  onPressed: () async{
+                                  onPressed: () {
                                     int id = noteList[index].id;
-                                    await context.read<ProviderStateManagement>().deleteNote(id);
+                                    Toast(context).show(
+                                      "Want to delete the note?",
+                                      () async => await context.read<ProviderStateManagement>().deleteNote(id),
+                                    );
                                   },
                                   icon: Icon(Icons.delete_forever_rounded, color: Colors.red, size: 31,)
                               ),
