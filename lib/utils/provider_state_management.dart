@@ -72,4 +72,16 @@ class ProviderStateManagement extends ChangeNotifier {
     },);
     notifyListeners();
   }
+
+  // function for searching notes by title
+  Future<void> searchNote(String title) async{
+    Database database = await DbHelper.getInstance.getDb();
+    _noteList.clear();
+    List<Map<String, dynamic>> searchNoteMap = await database.query(DbHelper.TABLE_NOTE,
+        where: "${DbHelper.TITLE} == ?", whereArgs: [title]);
+    searchNoteMap.forEach((note) {
+      _noteList.add(NoteModel.fromMap(note));
+    },);
+    notifyListeners();
+  }
 }
