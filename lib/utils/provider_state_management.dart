@@ -42,6 +42,7 @@ class ProviderStateManagement extends ChangeNotifier {
     getAllData();
   }
 
+  // update notes
   Future<void> updateNote(NoteModel note) async{
     Database database = await DbHelper.getInstance.getDb();
     database.update(DbHelper.TABLE_NOTE, {
@@ -53,4 +54,22 @@ class ProviderStateManagement extends ChangeNotifier {
     getAllData();
   }
 
+  // fetching notes by category
+  Future<void> getNoteByCategory(String category) async{
+    Database database = await DbHelper.getInstance.getDb();
+    _noteList.clear();
+    if(category.contains("All Notes")){
+      getAllData();
+      return;
+    }
+    List<Map<String, dynamic>> notesByCategory = await database.query(
+      DbHelper.TABLE_NOTE,
+      where: "${DbHelper.CATEGORY} == ?",
+      whereArgs: [category]
+    );
+    notesByCategory.forEach((note) {
+      _noteList.add(NoteModel.fromMap(note));
+    },);
+    notifyListeners();
+  }
 }
