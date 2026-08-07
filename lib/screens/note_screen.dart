@@ -193,7 +193,7 @@ class NoteScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: _floatingactionbuttonwidget,
+      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "note"),
     );
   }
 
