@@ -9,7 +9,7 @@ class TaskScreen extends StatelessWidget {
   TaskScreen({super.key});
 
   bool checkBoxValue = false;
-  final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
+  //final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
 
   @override
   Widget build(BuildContext context) {
@@ -27,60 +27,55 @@ class TaskScreen extends StatelessWidget {
                 child: Text("No task yet"),
               );
             }
-
-            return ListView.builder(
-                itemCount: taskList.length,
-                itemBuilder: (_, index) {
-                  int percentage = ((taskList[index].completedTask! / taskList[index].totalTask!)*100).toInt();
-                  return Column(
-                    children: [
-                    Container(
-                      padding: EdgeInsets.all(17),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color(0XFFE5EEFF),
-                      ),
-                      child: Row(
-                        spacing: 25,
-                        children: [
-                          Stack(
-                            alignment: AlignmentGeometry.center,
-                            children: [
-                              Text(
-                                "$percentage%",
-                                style: TextStyle(
-                                  color: Colors.blue.shade900,
-                                  fontWeight: FontWeight(600),
-                                ),
+            return Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(17),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Color(0XFFE5EEFF),
+                  ),
+                  child: Row(
+                      spacing: 25,
+                      children: [
+                        Stack(
+                          alignment: AlignmentGeometry.center,
+                          children: [
+                            Text(
+                              "40%",
+                              style: TextStyle(
+                                color: Colors.blue.shade900,
+                                fontWeight: FontWeight(600),
                               ),
-                              CircularProgressIndicator.adaptive(
-                                padding: EdgeInsets.only(bottom: 10,right: 10, top: 10, left: 15),
-                                value: (taskList[index].completedTask! / taskList[index].totalTask!),
-                                strokeAlign: 4,
-                                strokeWidth: 6,
-                                backgroundColor: Colors.blue.shade100,
-                                valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
+                            ),
+                            CircularProgressIndicator.adaptive(
+                              padding: EdgeInsets.only(bottom: 10,right: 10, top: 10, left: 15),
+                              value: 0.4,
+                              strokeAlign: 4,
+                              strokeWidth: 6,
+                              backgroundColor: Colors.blue.shade100,
+                              valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: .start,
+                          children: [
+                            Text(
+                              "4/10",
+                              style: TextStyle(
+                                fontWeight: FontWeight(500),
+                                fontSize: 21,
                               ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: .start,
-                            children: [
-                              Text(
-                                "${taskList[index].completedTask}/${taskList[index].totalTask}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight(500),
-                                  fontSize: 21,
-                                ),
-                              ),
-                              Text(
-                                "Tasks completed",
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                            Text(
+                              "Tasks completed",
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
+                  ),
 
                     const SizedBox(
                       height: 30,
@@ -102,45 +97,51 @@ class TaskScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+
                     // starts task here
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0XFFE5EEFF)
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: taskList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 7),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color(0XFFE5EEFF)
+                            ),
+                            child: ListTile(
+                              leading: Checkbox.adaptive(value: checkBoxValue, onChanged: (value) {
+                                checkBoxValue = value!;
+                              },),
+                              title: Text(taskList[index].title, style: TextStyle(
+                                  height: 2,
+                                  fontWeight: FontWeight(500)
+                              ),),
+                              horizontalTitleGap: 4,
+                              subtitle: Column(
+                                spacing: 10,
+                                crossAxisAlignment: .start,
+                                children: [
+                                  Text(taskList[index].subTitle),
+                                  Row(
+                                    spacing: 7,
+                                    children: [
+                                      Icon(CupertinoIcons.clock, size: 15, color: Colors.grey.shade600,),
+                                      Text(taskList[index].dateTime!, style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 12
+                                      ),)
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      child: ListTile(
-                        leading: Checkbox.adaptive(value: checkBoxValue, onChanged: (value) {
-                          checkBoxValue = value!;
-                        },),
-                        title: Text(taskList[index].title, style: TextStyle(
-                            height: 2,
-                            fontWeight: FontWeight(500)
-                        ),),
-                        horizontalTitleGap: 4,
-                        subtitle: Column(
-                          spacing: 10,
-                          children: [
-                            Text(taskList[index].subTitle),
-                            Row(
-                              spacing: 7,
-                              children: [
-                                Icon(CupertinoIcons.clock, size: 15, color: Colors.grey.shade600,),
-                                Text(taskList[index].dateTime!, style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 12
-                                ),)
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                   ],
                 );
-              },);
           },
         ),
       ),
