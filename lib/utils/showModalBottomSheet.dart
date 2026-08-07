@@ -1,4 +1,6 @@
+import 'package:dashboard/models/task_model.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
+import 'package:dashboard/utils/task_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -76,17 +78,7 @@ class Showmodalbottomsheet {
                         onPressed: () async{
                           if(_formKey.currentState!.validate()){
 
-                            flag ? await context.read<ProviderStateManagement>().insertNote(NoteModel(
-                              title: titleController.text,
-                              description: descriptController.text,
-                              dateTime: DateTime.now().toLocal().toString(),
-                            )) : await context.read<ProviderStateManagement>().updateNote(NoteModel(
-                              title: titleController.text,
-                              description: descriptController.text,
-                              dateTime: DateTime.now().toLocal().toString(),
-                              id: id,
-                              category: category
-                            ));
+                            await makeTheAction(flagFrom, flag, context, titleController, descriptController);
 
                             titleController.clear();
                             descriptController.clear();
@@ -113,11 +105,39 @@ class Showmodalbottomsheet {
     },);
   }
 
+  // get the title of action
   String getBottomSheetTitle(String flagFrom, bool flag){
     if(flagFrom.contains("note")){
       return flag ? "Add Note" : "Update Note";
     } else {
       return flag ? "Add Task" : "Update Task";
     }
+  }
+
+  Future<void> makeTheAction(String flagFrom,
+      bool flag, BuildContext context, TextEditingController titleController,
+      TextEditingController descriptController) async{
+      if(flagFrom.contains("note")){
+        flag ? await context.read<ProviderStateManagement>().insertNote(NoteModel(
+          title: titleController.text,
+          description: descriptController.text,
+          dateTime: DateTime.now().toLocal().toString(),
+        )) : await context.read<ProviderStateManagement>().updateNote(NoteModel(
+            title: titleController.text,
+            description: descriptController.text,
+            dateTime: DateTime.now().toLocal().toString(),
+            id: id,
+            category: category
+      ));
+    } else {
+        await context.read<TaskProvider>().insertTask(TaskModel(
+          title: titleController.text,
+          subTitle: descriptController.text,
+          dateTime: DateTime.now().toLocal().toIso8601String(),
+          completed: 0,
+          completedTask: 4,
+          totalTask: 10,
+        ));
+      }
   }
 }
