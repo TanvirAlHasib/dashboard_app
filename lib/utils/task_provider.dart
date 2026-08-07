@@ -30,7 +30,6 @@ class TaskProvider extends ChangeNotifier {
       TaskDbHelper.TITLE_COLUMN : task.title,
       TaskDbHelper.SUBTITLE_COLUMN : task.subTitle,
       TaskDbHelper.DATE_TIME_COLUMN : task.dateTime,
-      TaskDbHelper.TOTAL_TASK_COLUMN : task.totalTask,
       TaskDbHelper.COMPLETED_OR_NOT_COLUMN : task.completed,
       TaskDbHelper.TOTAL_TASK_COMPLETED_COLUMN : task.completedTask
     });

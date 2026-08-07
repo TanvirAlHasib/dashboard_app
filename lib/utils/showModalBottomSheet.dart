@@ -136,7 +136,6 @@ class Showmodalbottomsheet {
           dateTime: DateTime.now().toLocal().toIso8601String(),
           completed: 0,
           completedTask: 4,
-          totalTask: 10,
         ));
       }
   }
