@@ -13,7 +13,7 @@ class NoteScreen extends StatelessWidget {
   NoteScreen({super.key});
 
   final TextEditingController searchController = TextEditingController();
-  Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget();
+  final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "note",);
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +153,7 @@ class NoteScreen extends StatelessWidget {
                                   onPressed: () {
                                     int id = noteList[index].id;
                                     Toast(context).show(
-                                      "Want to delete the note?",
+                                      "Want to delete ?",
                                       () async => await context.read<ProviderStateManagement>().deleteNote(id),
                                     );
                                   },
@@ -171,7 +171,7 @@ class NoteScreen extends StatelessWidget {
                                         context: context,
                                         titleController: _floatingactionbuttonwidget.titleController,
                                         descriptController: _floatingactionbuttonwidget.descriptController,
-                                      flag: false
+                                      flag: false, flagFrom: "note"
                                     );
                                   },
                                   icon: Icon(Icons.edit_note_outlined, color: Colors.green.shade500, size: 34,)
@@ -193,7 +193,7 @@ class NoteScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Floatingactionbuttonwidget(),
+      floatingActionButton: _floatingactionbuttonwidget,
     );
   }
 
