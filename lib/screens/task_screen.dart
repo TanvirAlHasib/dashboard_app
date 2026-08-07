@@ -1,3 +1,4 @@
+import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -122,6 +123,7 @@ class TaskScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: Floatingactionbuttonwidget(),
     );
   }
 
