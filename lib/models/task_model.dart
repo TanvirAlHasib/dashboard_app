@@ -5,7 +5,7 @@ class TaskModel {
     this.totalTask, this.completedTask, this.completed, this.dateTime
   });
   final int ? completedTask;
-  final bool ? completed;
+  final int ? completed;
   final int ? totalTask;
   final String title;
   final String subTitle;

@@ -144,7 +144,7 @@ class TaskScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: _floatingactionbuttonwidget,
+      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "task"),
     );
   }
 

@@ -12,6 +12,7 @@ class TaskProvider extends ChangeNotifier {
   final List<TaskModel> _taskList = [];
   List<TaskModel> get taskList => _taskList;
 
+  // fetch all task function
   Future<void> getAllTask() async{
     Database database = await TaskDbHelper.getInstance.getTaskDB();
     _taskList.clear();
@@ -20,5 +21,19 @@ class TaskProvider extends ChangeNotifier {
       _taskList.add(TaskModel.fromMap(task));
     },);
     notifyListeners();
+  }
+
+  // insert task function
+  Future<void> insertTask(TaskModel task) async{
+    Database database = await TaskDbHelper.getInstance.getTaskDB();
+    await database.insert(TaskDbHelper.TASK_DB_TABLE_NAME, {
+      TaskDbHelper.DATE_TIME_COLUMN : task.title,
+      TaskDbHelper.SUBTITLE_COLUMN : task.subTitle,
+      TaskDbHelper.DATE_TIME_COLUMN : task.dateTime,
+      TaskDbHelper.TOTAL_TASK_COLUMN : task.totalTask,
+      TaskDbHelper.COMPLETED_OR_NOT_COLUMN : task.completed,
+      TaskDbHelper.TOTAL_TASK_COMPLETED_COLUMN : task.completedTask
+    });
+    await getAllTask();
   }
 }
