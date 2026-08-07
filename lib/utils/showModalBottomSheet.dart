@@ -16,6 +16,7 @@ class Showmodalbottomsheet {
   void show_ModalBottomSheet({required context, required TextEditingController titleController,
     required TextEditingController descriptController,
     required bool flag,
+    required String flagFrom,
   }){
     showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) {
       return Form(
@@ -31,7 +32,7 @@ class Showmodalbottomsheet {
           child: Column(
             children: [
               Text(
-                flag ? "Add Note" : "Update Note",
+                getBottomSheetTitle(flagFrom, flag),
                 style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight(600),
@@ -110,5 +111,13 @@ class Showmodalbottomsheet {
         ),
       );
     },);
+  }
+
+  String getBottomSheetTitle(String flagFrom, bool flag){
+    if(flagFrom.contains("note")){
+      return flag ? "Add Note" : "Update Note";
+    } else {
+      return flag ? "Add Task" : "Update Task";
+    }
   }
 }
