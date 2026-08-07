@@ -27,7 +27,7 @@ class TaskProvider extends ChangeNotifier {
   Future<void> insertTask(TaskModel task) async{
     Database database = await TaskDbHelper.getInstance.getTaskDB();
     await database.insert(TaskDbHelper.TASK_DB_TABLE_NAME, {
-      TaskDbHelper.DATE_TIME_COLUMN : task.title,
+      TaskDbHelper.TITLE_COLUMN : task.title,
       TaskDbHelper.SUBTITLE_COLUMN : task.subTitle,
       TaskDbHelper.DATE_TIME_COLUMN : task.dateTime,
       TaskDbHelper.TOTAL_TASK_COLUMN : task.totalTask,
