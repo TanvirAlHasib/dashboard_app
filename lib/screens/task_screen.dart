@@ -47,7 +47,7 @@ class TaskScreen extends StatelessWidget {
                             ),
                             CircularProgressIndicator.adaptive(
                               padding: EdgeInsets.only(bottom: 10,right: 10, top: 10, left: 15),
-                              value: 0.4,
+                              value: TaskProvider.completedTask / taskList.length,
                               strokeAlign: 4,
                               strokeWidth: 6,
                               backgroundColor: Colors.blue.shade100,
