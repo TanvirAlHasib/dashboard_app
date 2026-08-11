@@ -11,14 +11,19 @@ class TaskProvider extends ChangeNotifier {
 
   final List<TaskModel> _taskList = [];
   List<TaskModel> get taskList => _taskList;
+  static int completedTask = 0;
 
   // fetch all task function
   Future<void> getAllTask() async{
     Database database = await TaskDbHelper.getInstance.getTaskDB();
     _taskList.clear();
+    completedTask = 0;
     List<Map<String, dynamic>> mapTask = await database.query(TaskDbHelper.TASK_DB_TABLE_NAME);
     mapTask.forEach((task) {
       _taskList.add(TaskModel.fromMap(task));
+      if(task[TaskDbHelper.COMPLETED_OR_NOT_COLUMN] == 1){
+        completedTask = completedTask + 1;
+      }
     },);
     notifyListeners();
   }
