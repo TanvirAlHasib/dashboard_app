@@ -7,10 +7,6 @@ import 'package:provider/provider.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
-
-  //bool checkBoxValue = false;
-  //final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,8 +38,9 @@ class TaskScreen extends StatelessWidget {
                           alignment: AlignmentGeometry.center,
                           children: [
                             Text(
-                              "40%",
+                              "${((TaskProvider.completedTask / taskList.length) * 100).toInt()}%",
                               style: TextStyle(
+                                fontSize: 17,
                                 color: Colors.blue.shade900,
                                 fontWeight: FontWeight(600),
                               ),
@@ -62,7 +59,7 @@ class TaskScreen extends StatelessWidget {
                           crossAxisAlignment: .start,
                           children: [
                             Text(
-                              "4/10",
+                              "${TaskProvider.completedTask}/${taskList.length}",
                               style: TextStyle(
                                 fontWeight: FontWeight(500),
                                 fontSize: 21,
