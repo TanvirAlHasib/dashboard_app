@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TaskScreen extends StatelessWidget {
-  TaskScreen({super.key});
+  const TaskScreen({super.key});
 
-  bool checkBoxValue = false;
+  //bool checkBoxValue = false;
   //final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
 
   @override
@@ -110,8 +110,13 @@ class TaskScreen extends StatelessWidget {
                                 color: Color(0XFFE5EEFF)
                             ),
                             child: ListTile(
-                              leading: Checkbox.adaptive(value: checkBoxValue, onChanged: (value) {
-                                checkBoxValue = value!;
+                              leading: Checkbox.adaptive(
+                                value: taskList[index].completed == 0 ? false : true, onChanged: (value) {
+                                if(taskList[index].completed == 0){
+                                  provider.updateStatus(taskList[index].taskId!, 1);
+                                } else {
+                                  provider.updateStatus(taskList[index].taskId!, 0);
+                                }
                               },),
                               title: Text(taskList[index].title, style: TextStyle(
                                   height: 2,
