@@ -41,6 +41,18 @@ class TaskProvider extends ChangeNotifier {
     await getAllTask();
   }
 
+  //update task function
+  Future<void> updateTask(TaskModel task) async{
+    Database database = await TaskDbHelper.getInstance.getTaskDB();
+    await database.update(TaskDbHelper.TASK_DB_TABLE_NAME, {
+      TaskDbHelper.TITLE_COLUMN: task.title,
+      TaskDbHelper.SUBTITLE_COLUMN: task.subTitle,
+      TaskDbHelper.DATE_TIME_COLUMN: task.dateTime
+    }, where: "${TaskDbHelper.ID_COLUMN} == ?", whereArgs: [task.taskId]);
+
+    await getAllTask();
+  }
+
   //update the task status
   Future<void> updateStatus(int id, int status) async{
     Database database = await TaskDbHelper.getInstance.getTaskDB();
