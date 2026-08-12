@@ -1,4 +1,5 @@
 import 'package:dashboard/models/task_model.dart';
+import 'package:dashboard/utils/showModalBottomSheet.dart';
 import 'package:dashboard/utils/task_provider.dart';
 import 'package:dashboard/utils/toast.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
@@ -7,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TaskScreen extends StatelessWidget {
-  const TaskScreen({super.key});
+  TaskScreen({super.key});
+
+  final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
+  final Showmodalbottomsheet  _showmodalbottomsheet = Showmodalbottomsheet();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +153,7 @@ class TaskScreen extends StatelessWidget {
                                     child: IconButton(
                                       onPressed: () {
                                         Toast(context).show(
-                                          "Want to delete task ?",
+                                          "Do you want to delete the task ?",
                                           () async => await provider.deleteTask(taskList[index].taskId!),
                                         );
                                       }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 20,),
@@ -157,7 +162,16 @@ class TaskScreen extends StatelessWidget {
                                   SizedBox(
                                     width: 27,
                                     child: IconButton(
-                                      onPressed: () {  }, icon: Icon(Icons.edit_note, color: Colors.green.shade600, size: 23,),
+                                      onPressed: () async{
+                                        _floatingactionbuttonwidget.titleController.text = taskList[index].title;
+                                        _floatingactionbuttonwidget.descriptController.text = taskList[index].subTitle;
+                                        Showmodalbottomsheet.id = taskList[index].taskId!;
+                                        _showmodalbottomsheet.show_ModalBottomSheet(
+                                            context: context, titleController: _floatingactionbuttonwidget.titleController,
+                                            descriptController: _floatingactionbuttonwidget.descriptController,
+                                            flag: false, flagFrom: "task"
+                                        );
+                                      }, icon: Icon(Icons.edit_note, color: Colors.green.shade600, size: 23,),
                                     ),
                                   ),
                                 ],

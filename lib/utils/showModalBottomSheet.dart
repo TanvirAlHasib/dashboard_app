@@ -1,3 +1,4 @@
+import 'package:dashboard/database/task_db_helper.dart';
 import 'package:dashboard/models/task_model.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:dashboard/utils/task_provider.dart';
@@ -130,12 +131,16 @@ class Showmodalbottomsheet {
             category: category
       ));
     } else {
-        await context.read<TaskProvider>().insertTask(TaskModel(
+        flag ? await context.read<TaskProvider>().insertTask(TaskModel(
           title: titleController.text,
           subTitle: descriptController.text,
           dateTime: DateTime.now().toLocal().toIso8601String(),
           completed: 0,
           completedTask: 4,
+        )) : await context.read<TaskProvider>().updateTask(TaskModel(
+          title: titleController.text, subTitle: descriptController.text,
+          dateTime: DateTime.now().toLocal().toString(),
+          taskId: id
         ));
       }
   }
