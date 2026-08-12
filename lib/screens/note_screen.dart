@@ -153,7 +153,7 @@ class NoteScreen extends StatelessWidget {
                                   onPressed: () {
                                     int id = noteList[index].id;
                                     Toast(context).show(
-                                      "Want to delete ?",
+                                      "Want to delete note ?",
                                       () async => await context.read<ProviderStateManagement>().deleteNote(id),
                                     );
                                   },

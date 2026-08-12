@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Toast {
   //constructor
-  Toast(BuildContext this.context);
+  Toast(this.context);
   BuildContext context;
   // function to show snackBar
   void show(String message, VoidCallback function){
