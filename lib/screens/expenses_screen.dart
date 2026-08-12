@@ -9,6 +9,71 @@ class ExpensesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: MyAppBar(context),
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 22),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 17, bottom: 23),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0XFFEAEBFF),
+                    Color(0XFFF8F9FF)
+                  ],
+                  begin: AlignmentGeometry.topEnd,
+                  end: AlignmentGeometry.bottomStart
+                ),
+                borderRadius: BorderRadiusGeometry.circular(10),
+                border: BoxBorder.all(
+                  color: Colors.blue.shade200,
+                  width: 0.5
+                )
+              ),
+              child: Column(
+                spacing: 15,
+                children: [
+                  Text("TOTAL SPENT THIS MONTH", style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey.shade700
+                  ),),
+                  Text("8500 tk", style: TextStyle(
+                    fontSize: 32,
+                    color: Color(0XFF0B1C30),
+                    fontWeight: FontWeight(600)
+                  ),),
+                  Row(
+                    mainAxisAlignment: .center,
+                    spacing: 17,
+                    children: [
+                      Stack(
+                        alignment: AlignmentGeometry.center,
+                        children: [
+                          Text("80%", style: TextStyle(
+                            fontWeight: FontWeight(700),
+                            color: Colors.blue.shade700,
+                          ),),
+                          CircularProgressIndicator.adaptive(
+                            strokeAlign: 3,
+                            backgroundColor: Colors.blue.shade100,
+                            strokeWidth: 5,
+                            value: 0.8,
+                            valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
+                          )
+                        ],
+                      ),
+                      Text("used of your total budget", style: TextStyle(
+                        color: Colors.grey.shade700
+                      ),)
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
