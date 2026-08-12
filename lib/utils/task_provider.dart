@@ -50,4 +50,12 @@ class TaskProvider extends ChangeNotifier {
 
     await getAllTask();
   }
+
+  // delete selected task by id
+  Future<void> deleteTask(int id) async{
+    Database database = await TaskDbHelper.getInstance.getTaskDB();
+    await database.delete(TaskDbHelper.TASK_DB_TABLE_NAME,
+        where: "${TaskDbHelper.ID_COLUMN} == ?", whereArgs: [id]);
+    await getAllTask();
+  }
 }
