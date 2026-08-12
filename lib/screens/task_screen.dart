@@ -1,5 +1,6 @@
 import 'package:dashboard/models/task_model.dart';
 import 'package:dashboard/utils/task_provider.dart';
+import 'package:dashboard/utils/toast.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,12 @@ class TaskScreen extends StatelessWidget {
                                   SizedBox(
                                     width: 27,
                                     child: IconButton(
-                                      onPressed: () {  }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 20,),
+                                      onPressed: () {
+                                        Toast(context).show(
+                                          "Want to delete task ?",
+                                          () async => await provider.deleteTask(taskList[index].taskId!),
+                                        );
+                                      }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 20,),
                                     ),
                                   ),
                                   SizedBox(
