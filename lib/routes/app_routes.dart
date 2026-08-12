@@ -1,3 +1,4 @@
+import 'package:dashboard/screens/expenses_screen.dart';
 import 'package:dashboard/screens/home_screen.dart';
 import 'package:dashboard/screens/note_screen.dart';
 import 'package:dashboard/screens/task_screen.dart';
@@ -5,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRoutes {
   GoRouter appRoute = GoRouter(
-    initialLocation: "task",
+    initialLocation: "expenses",
       routes: [
         GoRoute(
           path: "/",
@@ -21,6 +22,11 @@ class AppRoutes {
           path: "/task",
           name: "task",
           builder: (context, state) => TaskScreen(),
+        ),
+        GoRoute(
+          path: "/expenses",
+          name: "expenses",
+          builder: (context, state) => ExpensesScreen(),
         ),
       ],
   );
