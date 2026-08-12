@@ -114,7 +114,8 @@ class TaskScreen extends StatelessWidget {
                                 } else {
                                   provider.updateStatus(taskList[index].taskId!, 0);
                                 }
-                              },),
+                              }, activeColor: Colors.blue.shade800,
+                              ),
                               title: Text(taskList[index].title, style: TextStyle(
                                   height: 2,
                                   fontWeight: FontWeight(500)
