@@ -101,7 +101,7 @@ class TaskScreen extends StatelessWidget {
                         itemCount: taskList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                            margin: EdgeInsets.only(bottom: 7),
+                            margin: EdgeInsets.only(bottom: 5),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: Color(0XFFE5EEFF)
@@ -136,6 +136,24 @@ class TaskScreen extends StatelessWidget {
                                       ),)
                                     ],
                                   )
+                                ],
+                              ),
+                              trailing: Row(
+                                mainAxisSize: .min,
+                                mainAxisAlignment: .center,
+                                children: [
+                                  SizedBox(
+                                    width: 27,
+                                    child: IconButton(
+                                      onPressed: () {  }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 20,),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 27,
+                                    child: IconButton(
+                                      onPressed: () {  }, icon: Icon(Icons.edit_note, color: Colors.green.shade600, size: 23,),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
