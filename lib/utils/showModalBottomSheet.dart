@@ -152,7 +152,12 @@ class Showmodalbottomsheet {
             expense: int.parse(descriptController.text),
             budget: 9000,
             category: "Food"
-        )) : null;
+        )) : await context.read<ExpenseProvider>().updateExpense(ExpenseModel(
+            title: titleController.text,
+            expense: int.parse(descriptController.text),
+            budget: 9000,
+            category: "Food"
+        ));
       }
   }
 }
