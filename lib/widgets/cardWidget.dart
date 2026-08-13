@@ -14,6 +14,7 @@ class Cardwidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         child: Text(text, style:TextStyle(
           fontSize: 16,
+          fontWeight: FontWeight(600)
         ),
         ),
       ),
