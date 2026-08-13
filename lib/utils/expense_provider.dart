@@ -9,15 +9,18 @@ class ExpenseProvider extends ChangeNotifier {
     getAllExpenses();
   }
 
-  final List<ExpenseModel> expensesList = [];
-  List<ExpenseModel> get getExpensesList => expensesList;
+  static num totalSpent = 0;
+  final List<ExpenseModel> _expensesList = [];
+  List<ExpenseModel> get getExpensesList => _expensesList;
 
   Future<void> getAllExpenses() async{
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
-    expensesList.clear();
+    _expensesList.clear();
+    totalSpent = 0;
     List<Map<String, dynamic>> mapExpenses = await database.query(ExpenseDbHelper.TABLE_NAME);
     mapExpenses.forEach((expense) {
-      expensesList.add(ExpenseModel.fromMap(expense));
+      _expensesList.add(ExpenseModel.fromMap(expense));
+      totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
     },);
     notifyListeners();
   }
