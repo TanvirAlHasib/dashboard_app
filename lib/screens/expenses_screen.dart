@@ -55,7 +55,7 @@ class ExpensesScreen extends StatelessWidget {
                           fontSize: 15,
                           color: Colors.grey.shade700
                       ),),
-                      Text("${expenseList[0].budget} tk", style: TextStyle(
+                      Text("${ExpenseProvider.totalSpent} tk", style: TextStyle(
                           fontSize: 32,
                           color: Color(0XFF0B1C30),
                           fontWeight: FontWeight(600)
@@ -67,7 +67,7 @@ class ExpensesScreen extends StatelessWidget {
                           Stack(
                             alignment: AlignmentGeometry.center,
                             children: [
-                              Text("${(ExpenseProvider.totalSpent / expenseList[0].budget).toInt()}%",
+                              Text("${((ExpenseProvider.totalSpent / expenseList[0].budget) * 100 ).toInt()}%",
                                 style: TextStyle(
                                 fontWeight: FontWeight(700),
                                 color: Colors.blue.shade700,
@@ -76,7 +76,7 @@ class ExpensesScreen extends StatelessWidget {
                                 strokeAlign: 3,
                                 backgroundColor: Colors.blue.shade100,
                                 strokeWidth: 5,
-                                value: 0.8,
+                                value: (ExpenseProvider.totalSpent / expenseList[0].budget),
                                 valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
                               )
                             ],
