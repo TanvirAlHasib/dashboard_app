@@ -1,5 +1,7 @@
 import 'package:dashboard/database/task_db_helper.dart';
+import 'package:dashboard/models/expense_model.dart';
 import 'package:dashboard/models/task_model.dart';
+import 'package:dashboard/utils/expense_provider.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:dashboard/utils/task_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -145,7 +147,12 @@ class Showmodalbottomsheet {
           taskId: id
         ));
       } else {
-
+        flag ? await context.read<ExpenseProvider>().insertExpense(ExpenseModel(
+            title: titleController.text,
+            expense: int.parse(descriptController.text),
+            budget: 9000,
+            category: "Food"
+        )) : null;
       }
   }
 }
