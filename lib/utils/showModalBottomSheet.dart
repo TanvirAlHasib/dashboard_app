@@ -156,7 +156,8 @@ class Showmodalbottomsheet {
             title: titleController.text,
             expense: int.parse(descriptController.text),
             budget: 9000,
-            category: "Food"
+            category: "Food",
+            id: id
         ));
       }
   }
