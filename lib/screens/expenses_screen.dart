@@ -133,7 +133,7 @@ class ExpensesScreen extends StatelessWidget {
                               color: Theme.of(context).cardColor,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Icon(Icons.money, color: Colors.blue.shade700,),
+                            child: Icon(Icons.money, color: Colors.blue.shade500,),
                           ),
                           title: Row(
                             spacing: 5,
