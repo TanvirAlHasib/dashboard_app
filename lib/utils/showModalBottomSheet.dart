@@ -110,8 +110,10 @@ class Showmodalbottomsheet {
   String getBottomSheetTitle(String flagFrom, bool flag){
     if(flagFrom.contains("note")){
       return flag ? "Add Note" : "Update Note";
-    } else {
+    } else if(flagFrom.contains("task")){
       return flag ? "Add Task" : "Update Task";
+    } else {
+      return flag ? "Add Expense" : "Update Expense";
     }
   }
 
@@ -130,7 +132,7 @@ class Showmodalbottomsheet {
             id: id,
             category: category
       ));
-    } else {
+    } else if(flagFrom.contains("task")) {
         flag ? await context.read<TaskProvider>().insertTask(TaskModel(
           title: titleController.text,
           subTitle: descriptController.text,
@@ -142,6 +144,8 @@ class Showmodalbottomsheet {
           dateTime: DateTime.now().toLocal().toString(),
           taskId: id
         ));
+      } else {
+
       }
   }
 }
