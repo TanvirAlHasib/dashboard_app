@@ -4,6 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ExpenseProvider extends ChangeNotifier {
+
+  ExpenseProvider() {
+    getAllExpenses();
+  }
+
   final List<ExpenseModel> expensesList = [];
   List<ExpenseModel> get getExpensesList => expensesList;
 
