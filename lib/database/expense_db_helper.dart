@@ -21,12 +21,12 @@ class ExpenseDbHelper {
     if(db != null){
       return db!;
     } else {
-      db = await getDB();
+      db = await _getDB();
       return db!;
     }
   }
 
-  Future<Database> getDB() async{
+  Future<Database> _getDB() async{
     Directory databasePath = await getApplicationDocumentsDirectory();
     String path = join(databasePath.path, DB_NAME);
     return db = await openDatabase(
