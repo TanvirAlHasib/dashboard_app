@@ -1,3 +1,4 @@
+import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class ExpensesScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 22),
         child: Column(
+          crossAxisAlignment: .start,
           children: [
             Container(
               padding: EdgeInsets.only(left: 20, right: 20, top: 17, bottom: 23),
@@ -19,8 +21,9 @@ class ExpensesScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color(0XFFEAEBFF),
-                    Color(0XFFF8F9FF)
+                    Theme.of(context).cardColor,
+                    Color(0XFFF8F9FF),
+                    Colors.white
                   ],
                   begin: AlignmentGeometry.topEnd,
                   end: AlignmentGeometry.bottomStart
@@ -70,7 +73,28 @@ class ExpensesScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(
+              height: 17,
+            ),
+            Text("Categories", style: TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight(600),
+            ),),
+            const SizedBox(
+              height: 12,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Cardwidget(text: "Food"),
+                  Cardwidget(text: "Travel"),
+                  Cardwidget(text: "Bills"),
+                  Cardwidget(text: "Shopping"),
+                ],
+              ),
+            ),
           ],
         ),
       ),
