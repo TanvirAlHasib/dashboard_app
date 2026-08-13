@@ -1,6 +1,7 @@
 import 'package:dashboard/models/expense_model.dart';
 import 'package:dashboard/utils/expense_provider.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
+import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -196,6 +197,7 @@ class ExpensesScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "expenses"),
     );
   }
 
