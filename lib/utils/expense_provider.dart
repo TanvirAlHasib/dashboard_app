@@ -13,6 +13,7 @@ class ExpenseProvider extends ChangeNotifier {
   final List<ExpenseModel> _expensesList = [];
   List<ExpenseModel> get getExpensesList => _expensesList;
 
+  // fetch all the expenses data
   Future<void> getAllExpenses() async{
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _expensesList.clear();
@@ -23,5 +24,17 @@ class ExpenseProvider extends ChangeNotifier {
       totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
     },);
     notifyListeners();
+  }
+
+  // insert expenses
+  Future<void> insertExpense(ExpenseModel expense) async{
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    await database.insert(ExpenseDbHelper.TABLE_NAME, {
+      ExpenseDbHelper.TITLE_COLUMN : expense.title,
+      ExpenseDbHelper.EXPENSES_COLUMN : expense.expense,
+      ExpenseDbHelper.CATEGORY_COLUMN : expense.category,
+      ExpenseDbHelper.BUDGET_COLUMN : expense.budget,
+    });
+    getAllExpenses();
   }
 }
