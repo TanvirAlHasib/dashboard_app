@@ -88,11 +88,93 @@ class ExpensesScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Cardwidget(text: "Food"),
-                  Cardwidget(text: "Travel"),
-                  Cardwidget(text: "Bills"),
-                  Cardwidget(text: "Shopping"),
+                  InkWell(
+                    onTap: () { },
+                    child: Cardwidget(text: "Food")
+                  ),
+                  InkWell(
+                    onTap: () { },
+                    child: Cardwidget(text: "Travel")
+                  ),
+                  InkWell(
+                    onTap: () { },
+                    child: Cardwidget(text: "Bills")
+                  ),
+                  InkWell(
+                    onTap: () { },
+                    child: Cardwidget(text: "Shopping")
+                  ),
                 ],
+              ),
+            ),
+            const SizedBox(
+              height: 17,
+            ),
+            Text("Transactions", style: TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight(600),
+            ),),
+            const SizedBox(
+              height: 12,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: ListTile(
+                          leading: Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(Icons.money, color: Colors.blue.shade700,),
+                          ),
+                          title: Row(
+                            spacing: 5,
+                            children: [
+                              Text("-2000 tk"),
+                              Expanded(
+                                child: Center(
+                                  child: Card(
+                                    elevation: 0,
+                                    color: Colors.amber.shade50,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(5)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4),
+                                      child: Text("Food", overflow: TextOverflow.ellipsis, style: TextStyle(
+                                          fontSize: 12
+                                      ),),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          subtitle: Text("Foods Market"),
+                          trailing: Row(
+                            mainAxisSize: .min,
+                            children: [
+                              IconButton(onPressed: () { }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 23,)),
+                              IconButton(onPressed: () { }, icon: Icon(Icons.edit_note, color: Colors.green.shade700, size: 25,)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Divider(
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ],
