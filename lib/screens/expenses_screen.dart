@@ -1,3 +1,4 @@
+import 'package:dashboard/models/expense_model.dart';
 import 'package:dashboard/utils/expense_provider.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,15 @@ class ExpensesScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 22),
         child: Consumer<ExpenseProvider>(
-          builder: (_, provider, _) {
+          builder: (ctx, provider, _) {
+
+            List<ExpenseModel> expenseList = provider.getExpensesList;
+            if(expenseList.isEmpty){
+              return Center(
+                child: Text("No Expenses yet"),
+              );
+            }
+
             return Column(
               crossAxisAlignment: .start,
               children: [
@@ -45,7 +54,7 @@ class ExpensesScreen extends StatelessWidget {
                           fontSize: 15,
                           color: Colors.grey.shade700
                       ),),
-                      Text("8500 tk", style: TextStyle(
+                      Text("${expenseList[0].budget} tk", style: TextStyle(
                           fontSize: 32,
                           color: Color(0XFF0B1C30),
                           fontWeight: FontWeight(600)
@@ -57,7 +66,8 @@ class ExpensesScreen extends StatelessWidget {
                           Stack(
                             alignment: AlignmentGeometry.center,
                             children: [
-                              Text("80%", style: TextStyle(
+                              Text("${(ExpenseProvider.totalSpent / expenseList[0].budget).toInt()}%",
+                                style: TextStyle(
                                 fontWeight: FontWeight(700),
                                 color: Colors.blue.shade700,
                               ),),
@@ -123,7 +133,7 @@ class ExpensesScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 5,
+                    itemCount: expenseList.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -142,7 +152,7 @@ class ExpensesScreen extends StatelessWidget {
                               title: Row(
                                 spacing: 5,
                                 children: [
-                                  Text("-2000 tk"),
+                                  Text("-${expenseList[index].expense} tk"),
                                   Expanded(
                                     child: Center(
                                       child: Card(
@@ -151,7 +161,7 @@ class ExpensesScreen extends StatelessWidget {
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(5)),
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4),
-                                          child: Text("Food", overflow: TextOverflow.ellipsis, style: TextStyle(
+                                          child: Text(expenseList[index].category, overflow: TextOverflow.ellipsis, style: TextStyle(
                                               fontSize: 12
                                           ),),
                                         ),
@@ -160,7 +170,7 @@ class ExpensesScreen extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              subtitle: Text("Foods Market"),
+                              subtitle: Text(expenseList[index].title),
                               trailing: Row(
                                 mainAxisSize: .min,
                                 children: [
