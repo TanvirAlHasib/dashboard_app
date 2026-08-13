@@ -1,5 +1,6 @@
 import 'package:dashboard/routes/app_routes.dart';
 import 'package:dashboard/themes/light.dart';
+import 'package:dashboard/utils/expense_provider.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:dashboard/utils/task_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (context) => ProviderStateManagement(),),
           ChangeNotifierProvider(create: (context) => TaskProvider(),),
+          ChangeNotifierProvider(create: (context) => ExpenseProvider(),)
         ],
       child: const MyApp())
   );
