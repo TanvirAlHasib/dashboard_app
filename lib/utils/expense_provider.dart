@@ -35,6 +35,17 @@ class ExpenseProvider extends ChangeNotifier {
       ExpenseDbHelper.CATEGORY_COLUMN : expense.category,
       ExpenseDbHelper.BUDGET_COLUMN : expense.budget,
     });
-    getAllExpenses();
+    await getAllExpenses();
+  }
+
+  // update expenses
+  Future<void> updateExpense(ExpenseModel expense) async{
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    await database.update(ExpenseDbHelper.TABLE_NAME, {
+      ExpenseDbHelper.TITLE_COLUMN : expense.title,
+      ExpenseDbHelper.EXPENSES_COLUMN : expense.expense,
+      ExpenseDbHelper.CATEGORY_COLUMN : expense.category
+    }, where: "${ExpenseDbHelper.ID_COLUMN} == ?", whereArgs: [expense.id]);
+    await getAllExpenses();
   }
 }
