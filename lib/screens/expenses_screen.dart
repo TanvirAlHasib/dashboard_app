@@ -41,15 +41,31 @@ class ExpensesScreen extends StatelessWidget {
                   mainAxisAlignment: .center,
                   spacing: 8,
                   children: [
-                    Text("Budget is empty for this month"),
-                    FilledButton(
-                      onPressed: (){ },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Colors.blue.shade800,
-                      ),
-                      child: Text("History", style: TextStyle(
-                        fontWeight: FontWeight(600)
-                      ),))
+                    Text("Budget is empty for this month!!!", style: TextStyle(
+                      fontSize: 18
+                    ),),
+                    Row(
+                      spacing: 10,
+                      mainAxisAlignment: .center,
+                      children: [
+                        FilledButton(
+                          onPressed: (){ },
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Colors.blue.shade800,
+                          ),
+                          child: Text("History", style: TextStyle(
+                            fontWeight: FontWeight(600)
+                          ),)),
+                        FilledButton(
+                          onPressed: (){ },
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Colors.blue.shade800,
+                          ),
+                          child: Text("Add Budget", style: TextStyle(
+                            fontWeight: FontWeight(600)
+                          ),)),
+                      ],
+                    )
                   ],
                 ),
               );
