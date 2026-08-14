@@ -12,6 +12,7 @@ class ExpenseProvider extends ChangeNotifier {
   }
 
   static num totalSpent = 0;
+  static num totalBudget = 0;
   final List<ExpenseModel> _expensesList = [];
   final List<BudgetModel> _budgetList = [];
   List<ExpenseModel> get getExpensesList => _expensesList;
@@ -27,6 +28,7 @@ class ExpenseProvider extends ChangeNotifier {
       _expensesList.add(ExpenseModel.fromMap(expense));
       totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
     },);
+    getAllBudgets();
     notifyListeners();
   }
 
@@ -37,13 +39,15 @@ class ExpenseProvider extends ChangeNotifier {
         now.year,
         now.month,
         1
-    );
+    ).toIso8601String();
     final startOfNextMonth = DateTime(
       now.year,
       now.month + 1,
-    );
+      1
+    ).toIso8601String();
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _budgetList.clear();
+    totalBudget = 0;
     List<Map<String, dynamic>> mapBudgets = await database.query(
         ExpenseDbHelper.BUDGET_TABLE,
         where: '''(${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} >= ?)
@@ -53,7 +57,9 @@ class ExpenseProvider extends ChangeNotifier {
     );
     mapBudgets.forEach((budget) {
       _budgetList.add(BudgetModel.fromMap(budget));
+      totalBudget = totalBudget + budget[ExpenseDbHelper.BUDGET_COLUMN];
     },);
+    notifyListeners();
   }
 
   // insert expenses
@@ -74,7 +80,7 @@ class ExpenseProvider extends ChangeNotifier {
       ExpenseDbHelper.BUDGET_COLUMN : budget.budget,
       ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN : budget.DateTime,
     },);
-    await getAllExpenses();
+    await getAllBudgets();
   }
 
   // update expenses

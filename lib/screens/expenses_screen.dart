@@ -1,17 +1,21 @@
 import 'package:dashboard/models/budget_model.dart';
 import 'package:dashboard/models/expense_model.dart';
 import 'package:dashboard/utils/expense_provider.dart';
-import 'package:dashboard/utils/toast.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/textFormFieldWidget.dart';
 
 class ExpensesScreen extends StatelessWidget {
   ExpensesScreen({super.key});
 
   bool canAccess = true;
+  TextEditingController budgetController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,99 @@ class ExpensesScreen extends StatelessWidget {
                             fontWeight: FontWeight(600)
                           ),)),
                         FilledButton(
-                          onPressed: (){ },
+                          onPressed: (){
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height * 0.5 + MediaQuery.of(context).viewInsets.bottom * 0.8,
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Add Monthly Budget",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight(600),
+                                            ),),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Textformfieldwidget(
+                                              icon: Icons.money,
+                                              textEditingController: budgetController
+                                          ),
+                                          const SizedBox(
+                                            height: 25,
+                                          ),
+                                          Row(
+                                            spacing: 5,
+                                            children: [
+                                              Expanded(
+                                                child: OutlinedButton(
+                                                    onPressed: () {
+                                                      context.pop();
+                                                    },
+                                                    style: OutlinedButton.styleFrom(
+                                                        textStyle: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight: FontWeight(600)
+                                                        )
+                                                    ),
+                                                    child: Text("Cancel")
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: OutlinedButton(
+                                                    onPressed: () async{
+                                                      if(_formKey.currentState!.validate()){
+
+                                                        String dateTime = DateTime(
+                                                          DateTime.now().year,
+                                                          DateTime.now().month,
+                                                          DateTime.now().day
+                                                        ).toIso8601String();
+                                                        // insert budget to the budget table
+                                                        await context.read<ExpenseProvider>().insertBudget(BudgetModel(
+                                                            budget: int.parse(budgetController.text),
+                                                            DateTime: dateTime
+                                                        ));
+
+                                                        budgetController.clear();
+                                                        context.pop();
+                                                      }
+                                                    },
+                                                    style: OutlinedButton.styleFrom(
+                                                        textStyle: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight: FontWeight(600)
+                                                        )
+                                                    ),
+                                                    child: Text(
+                                                        "Add"
+                                                    )
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                            );
+                          },
                           style: FilledButton.styleFrom(
                             backgroundColor: Colors.blue.shade800,
                           ),
@@ -112,7 +208,7 @@ class ExpensesScreen extends StatelessWidget {
                           Stack(
                             alignment: AlignmentGeometry.center,
                             children: [
-                              Text("${((ExpenseProvider.totalSpent / budgetList[0].budget) * 100 ).toInt()}%",
+                              Text("${((ExpenseProvider.totalSpent / ExpenseProvider.totalBudget) * 100 ).toInt()}%",
                                 style: TextStyle(
                                 fontWeight: FontWeight(700),
                                 color: Colors.blue.shade700,
@@ -121,7 +217,7 @@ class ExpensesScreen extends StatelessWidget {
                                 strokeAlign: 3,
                                 backgroundColor: Colors.blue.shade100,
                                 strokeWidth: 5,
-                                value: (ExpenseProvider.totalSpent / budgetList[0].budget),
+                                value: (ExpenseProvider.totalSpent / ExpenseProvider.totalBudget),
                                 valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
                               )
                             ],
