@@ -19,6 +19,8 @@ class ExpenseProvider extends ChangeNotifier {
   List<BudgetModel> get getBudgetList => _budgetList;
 
   // fetch all the expenses data
+  //TODO: I have need to fetch expenses according to the month
+  //TODO: there will be option to see expenses history there user will see previous history
   Future<void> getAllExpenses() async{
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _expensesList.clear();

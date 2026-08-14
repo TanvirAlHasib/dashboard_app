@@ -29,14 +29,8 @@ class ExpensesScreen extends StatelessWidget {
 
             List<ExpenseModel> expenseList = provider.getExpensesList;
             List<BudgetModel> budgetList = provider.getBudgetList;
-            if(expenseList.isEmpty){
-              return Center(
-                child: Text("No Expenses yet"),
-              );
-            }
 
-            if(budgetList.isEmpty){
-              //Toast(context).show("Please enter this month's budget!!", () {},);
+            if(expenseList.isEmpty){
               canAccess = false;
               return SizedBox(
                 width: double.infinity,
@@ -45,24 +39,16 @@ class ExpensesScreen extends StatelessWidget {
                   mainAxisAlignment: .center,
                   spacing: 8,
                   children: [
-                    Text("Budget is empty for this month!!!", style: TextStyle(
-                      fontSize: 18
-                    ),),
-                    Row(
-                      spacing: 10,
-                      mainAxisAlignment: .center,
+                    budgetList.isEmpty ? Column(
+                      spacing: 8,
                       children: [
+                        Text("Add Budget of the Month",textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16
+                          ),),
                         FilledButton(
-                          onPressed: (){ },
-                          style: FilledButton.styleFrom(
-                            backgroundColor: Colors.blue.shade800,
-                          ),
-                          child: Text("History", style: TextStyle(
-                            fontWeight: FontWeight(600)
-                          ),)),
-                        FilledButton(
-                          onPressed: (){
-                            showModalBottomSheet(
+                            onPressed: (){
+                              showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
                                 builder: (context) {
@@ -120,9 +106,9 @@ class ExpensesScreen extends StatelessWidget {
                                                       if(_formKey.currentState!.validate()){
 
                                                         String dateTime = DateTime(
-                                                          DateTime.now().year,
-                                                          DateTime.now().month,
-                                                          DateTime.now().day
+                                                            DateTime.now().year,
+                                                            DateTime.now().month,
+                                                            DateTime.now().day
                                                         ).toIso8601String();
                                                         // insert budget to the budget table
                                                         await context.read<ExpenseProvider>().insertBudget(BudgetModel(
@@ -152,16 +138,19 @@ class ExpensesScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                            );
-                          },
-                          style: FilledButton.styleFrom(
-                            backgroundColor: Colors.blue.shade800,
-                          ),
-                          child: Text("Add Budget", style: TextStyle(
-                            fontWeight: FontWeight(600)
-                          ),)),
+                              );
+                            },
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.blue.shade800,
+                            ),
+                            child: Text("Add Budget", style: TextStyle(
+                                fontWeight: FontWeight(600)
+                            ),))
                       ],
-                    )
+                    ) : Text("No Expenses yet.",textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 16
+                      ),)
                   ],
                 ),
               );
