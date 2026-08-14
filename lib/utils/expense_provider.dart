@@ -8,7 +8,6 @@ class ExpenseProvider extends ChangeNotifier {
 
   ExpenseProvider() {
     getAllExpenses();
-    getAllBudgets();
   }
 
   static num totalSpent = 0;
