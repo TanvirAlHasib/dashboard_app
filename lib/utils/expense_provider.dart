@@ -1,4 +1,5 @@
 import 'package:dashboard/database/expense_db_helper.dart';
+import 'package:dashboard/models/budget_model.dart';
 import 'package:dashboard/models/expense_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,8 +34,17 @@ class ExpenseProvider extends ChangeNotifier {
       ExpenseDbHelper.TITLE_COLUMN : expense.title,
       ExpenseDbHelper.EXPENSES_COLUMN : expense.expense,
       ExpenseDbHelper.CATEGORY_COLUMN : expense.category,
-      ExpenseDbHelper.BUDGET_COLUMN : expense.budget,
     });
+    await getAllExpenses();
+  }
+
+  // insert budget
+  Future<void> insertBudget(BudgetModel budget) async{
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    await database.insert(ExpenseDbHelper.BUDGET_TABLE, {
+      ExpenseDbHelper.BUDGET_COLUMN : budget.budget,
+      ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN : budget.DateTime,
+    },);
     await getAllExpenses();
   }
 
