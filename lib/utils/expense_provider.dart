@@ -12,14 +12,41 @@ class ExpenseProvider extends ChangeNotifier {
 
   static num totalSpent = 0;
   final List<ExpenseModel> _expensesList = [];
+  final List<BudgetModel> _budgetList = [];
   List<ExpenseModel> get getExpensesList => _expensesList;
+  List<BudgetModel> get getBudgetList => _budgetList;
 
   // fetch all the expenses data
   Future<void> getAllExpenses() async{
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _expensesList.clear();
+    _budgetList.clear();
     totalSpent = 0;
     List<Map<String, dynamic>> mapExpenses = await database.query(ExpenseDbHelper.TABLE_NAME);
+
+    // start of budget fetching
+    final DateTime now = DateTime.now();
+    final startOfMonth = DateTime(
+      now.year,
+      now.month,
+      1
+    );
+    final startOfNextMonth = DateTime(
+      now.year,
+      now.month + 1,
+    );
+    List<Map<String, dynamic>> mapBudgets = await database.query(
+      ExpenseDbHelper.BUDGET_TABLE,
+      where: '''(${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} >= ?)
+      and (${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} < ?)
+      ''',
+      whereArgs: [startOfMonth, startOfNextMonth]
+    );
+    mapBudgets.forEach((budget) {
+      _budgetList.add(BudgetModel.fromMap(budget));
+    },);
+
+    //end of budget fetching
     mapExpenses.forEach((expense) {
       _expensesList.add(ExpenseModel.fromMap(expense));
       totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
