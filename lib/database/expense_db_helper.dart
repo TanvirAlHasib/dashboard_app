@@ -33,21 +33,23 @@ class ExpenseDbHelper {
     String path = join(databasePath.path, DB_NAME);
     return db = await openDatabase(
       path,
-      onCreate: (db, version) {
-        return db.execute(
+      onCreate: (db, version) async {
+        await db.execute(
           '''
           create table $TABLE_NAME(
           $ID_COLUMN INTEGER PRIMARY KEY AUTOINCREMENT,
           $TITLE_COLUMN text not null,
           $EXPENSES_COLUMN INTEGER not null,
-          $CATEGORY_COLUMN text not null,
+          $CATEGORY_COLUMN text not null
           );
-          
-          create table $BUDGET_TABLE(
+          '''
+        );
+
+        await db.execute('''create table $BUDGET_TABLE(
           $ID_COLUMN INTEGER PRIMARY KEY AUTOINCREMENT,
           $BUDGET_COLUMN INTEGER not null,
           $BUDGET_INIT_DATE_TIME_COLUMN text not null
-          )
+          );
           '''
         );
       },

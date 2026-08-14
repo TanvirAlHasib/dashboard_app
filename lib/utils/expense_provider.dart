@@ -1,7 +1,6 @@
 import 'package:dashboard/database/expense_db_helper.dart';
 import 'package:dashboard/models/budget_model.dart';
 import 'package:dashboard/models/expense_model.dart';
-import 'package:dashboard/utils/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,6 +8,7 @@ class ExpenseProvider extends ChangeNotifier {
 
   ExpenseProvider() {
     getAllExpenses();
+    getAllBudgets();
   }
 
   static num totalSpent = 0;
