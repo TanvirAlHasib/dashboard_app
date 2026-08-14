@@ -150,12 +150,10 @@ class Showmodalbottomsheet {
         flag ? await context.read<ExpenseProvider>().insertExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            budget: 9000,
             category: "Food"
         )) : await context.read<ExpenseProvider>().updateExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            budget: 9000,
             category: "Food",
             id: id
         ));

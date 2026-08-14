@@ -1,5 +1,7 @@
+import 'package:dashboard/models/budget_model.dart';
 import 'package:dashboard/models/expense_model.dart';
 import 'package:dashboard/utils/expense_provider.dart';
+import 'package:dashboard/utils/toast.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ExpensesScreen extends StatelessWidget {
-  const ExpensesScreen({super.key});
+  ExpensesScreen({super.key});
+
+  bool canAccess = true;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +24,34 @@ class ExpensesScreen extends StatelessWidget {
           builder: (ctx, provider, _) {
 
             List<ExpenseModel> expenseList = provider.getExpensesList;
+            List<BudgetModel> budgetList = provider.getBudgetList;
             if(expenseList.isEmpty){
               return Center(
                 child: Text("No Expenses yet"),
+              );
+            }
+
+            if(budgetList.isEmpty){
+              //Toast(context).show("Please enter this month's budget!!", () {},);
+              canAccess = false;
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: .center,
+                  mainAxisAlignment: .center,
+                  spacing: 8,
+                  children: [
+                    Text("Budget is empty for this month"),
+                    FilledButton(
+                      onPressed: (){ },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.blue.shade800,
+                      ),
+                      child: Text("History", style: TextStyle(
+                        fontWeight: FontWeight(600)
+                      ),))
+                  ],
+                ),
               );
             }
 
@@ -67,7 +96,7 @@ class ExpensesScreen extends StatelessWidget {
                           Stack(
                             alignment: AlignmentGeometry.center,
                             children: [
-                              Text("${((ExpenseProvider.totalSpent / expenseList[0].budget) * 100 ).toInt()}%",
+                              Text("${((ExpenseProvider.totalSpent / budgetList[0].budget) * 100 ).toInt()}%",
                                 style: TextStyle(
                                 fontWeight: FontWeight(700),
                                 color: Colors.blue.shade700,
@@ -76,7 +105,7 @@ class ExpensesScreen extends StatelessWidget {
                                 strokeAlign: 3,
                                 backgroundColor: Colors.blue.shade100,
                                 strokeWidth: 5,
-                                value: (ExpenseProvider.totalSpent / expenseList[0].budget),
+                                value: (ExpenseProvider.totalSpent / budgetList[0].budget),
                                 valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
                               )
                             ],
@@ -197,7 +226,7 @@ class ExpensesScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "expenses"),
+      floatingActionButton: canAccess ? Floatingactionbuttonwidget(flagFrom: "expenses") : null,
     );
   }
 

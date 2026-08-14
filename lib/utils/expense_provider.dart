@@ -1,6 +1,7 @@
 import 'package:dashboard/database/expense_db_helper.dart';
 import 'package:dashboard/models/budget_model.dart';
 import 'package:dashboard/models/expense_model.dart';
+import 'package:dashboard/utils/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -20,38 +21,39 @@ class ExpenseProvider extends ChangeNotifier {
   Future<void> getAllExpenses() async{
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _expensesList.clear();
-    _budgetList.clear();
     totalSpent = 0;
     List<Map<String, dynamic>> mapExpenses = await database.query(ExpenseDbHelper.TABLE_NAME);
-
-    // start of budget fetching
-    final DateTime now = DateTime.now();
-    final startOfMonth = DateTime(
-      now.year,
-      now.month,
-      1
-    );
-    final startOfNextMonth = DateTime(
-      now.year,
-      now.month + 1,
-    );
-    List<Map<String, dynamic>> mapBudgets = await database.query(
-      ExpenseDbHelper.BUDGET_TABLE,
-      where: '''(${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} >= ?)
-      and (${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} < ?)
-      ''',
-      whereArgs: [startOfMonth, startOfNextMonth]
-    );
-    mapBudgets.forEach((budget) {
-      _budgetList.add(BudgetModel.fromMap(budget));
-    },);
-
-    //end of budget fetching
     mapExpenses.forEach((expense) {
       _expensesList.add(ExpenseModel.fromMap(expense));
       totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
     },);
     notifyListeners();
+  }
+
+  // start of budget fetching
+  Future<void> getAllBudgets() async{
+    final DateTime now = DateTime.now();
+    final startOfMonth = DateTime(
+        now.year,
+        now.month,
+        1
+    );
+    final startOfNextMonth = DateTime(
+      now.year,
+      now.month + 1,
+    );
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    _budgetList.clear();
+    List<Map<String, dynamic>> mapBudgets = await database.query(
+        ExpenseDbHelper.BUDGET_TABLE,
+        where: '''(${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} >= ?)
+      and (${ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN} < ?)
+      ''',
+        whereArgs: [startOfMonth, startOfNextMonth]
+    );
+    mapBudgets.forEach((budget) {
+      _budgetList.add(BudgetModel.fromMap(budget));
+    },);
   }
 
   // insert expenses
