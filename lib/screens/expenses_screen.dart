@@ -13,7 +13,6 @@ import '../widgets/textFormFieldWidget.dart';
 class ExpensesScreen extends StatelessWidget {
   ExpensesScreen({super.key});
 
-  bool canAccess = true;
   TextEditingController budgetController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -31,7 +30,6 @@ class ExpensesScreen extends StatelessWidget {
             List<BudgetModel> budgetList = provider.getBudgetList;
 
             if(expenseList.isEmpty){
-              canAccess = false;
               return SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -234,7 +232,8 @@ class ExpensesScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       InkWell(
-                          onTap: () { },
+                          onTap: () { print(ExpenseProvider.totalBudget);
+                            print(ExpenseProvider.totalSpent);},
                           child: Cardwidget(text: "Food")
                       ),
                       InkWell(
@@ -327,7 +326,14 @@ class ExpensesScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: canAccess ? Floatingactionbuttonwidget(flagFrom: "expenses") : null,
+      floatingActionButton: Consumer<ExpenseProvider>(builder: (_, provider, _) {
+        if(provider.getBudgetList.isEmpty){
+          return const SizedBox.shrink();
+        }
+
+        return Floatingactionbuttonwidget(flagFrom: "expenses");
+
+      },),
     );
   }
 
