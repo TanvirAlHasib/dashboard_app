@@ -209,7 +209,7 @@ class ExpensesScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          Text("used of your total budget", style: TextStyle(
+                          Text("used of your ${ExpenseProvider.totalBudget} tk budget", style: TextStyle(
                               color: Colors.grey.shade700
                           ),)
                         ],
