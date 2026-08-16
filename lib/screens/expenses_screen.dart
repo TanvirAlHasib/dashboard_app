@@ -415,6 +415,7 @@ class ExpensesScreen extends StatelessWidget {
                       _floatingactionbuttonwidget.titleController.text = expenseList[index].title;
                       _floatingactionbuttonwidget.descriptController.text = expenseList[index].expense.toString();
                       Showmodalbottomsheet.id = expenseList[index].id!;
+                      Showmodalbottomsheet.selectedCategory = expenseList[index].category;
                       _showmodalbottomsheet.show_ModalBottomSheet(
                         context: context,
                         titleController: _floatingactionbuttonwidget.titleController,

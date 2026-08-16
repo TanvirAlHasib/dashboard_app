@@ -15,7 +15,7 @@ class Showmodalbottomsheet {
 
   final _formKey = GlobalKey<FormState>();
   static int id = 0;
-  String ? selectedCategory;
+  static String selectedCategory = "";
 
   void show_ModalBottomSheet({required context, required TextEditingController titleController,
     required TextEditingController descriptController,
@@ -23,7 +23,7 @@ class Showmodalbottomsheet {
     required String flagFrom,
     List<String> ? categoryList,
   }){
-    selectedCategory = categoryList!.first;
+    selectedCategory = selectedCategory.isEmpty ? categoryList!.first : selectedCategory;
     showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) {
       return Form(
         key: _formKey,
@@ -64,7 +64,7 @@ class Showmodalbottomsheet {
                       height: 1,
                       color: Colors.blue.shade400,
                     ),
-                    items: categoryList.map((item) {
+                    items: categoryList!.map((item) {
                       return DropdownMenuItem(
                         value: item,
                         child: Text(item),
@@ -178,11 +178,11 @@ class Showmodalbottomsheet {
         flag ? await context.read<ExpenseProvider>().insertExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            category: selectedCategory!
+            category: selectedCategory
         )) : await context.read<ExpenseProvider>().updateExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            category: selectedCategory!,
+            category: selectedCategory,
             id: id
         ));
       }
