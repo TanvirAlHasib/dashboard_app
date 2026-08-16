@@ -174,12 +174,20 @@ class Showmodalbottomsheet {
         flag ? await context.read<TaskProvider>().insertTask(TaskModel(
           title: titleController.text,
           subTitle: descriptController.text,
-          dateTime: DateTime.now().toLocal().toIso8601String(),
+          dateTime: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          ).toString().split(" ").first,
           completed: 0,
-          completedTask: 4,
         )) : await context.read<TaskProvider>().updateTask(TaskModel(
-          title: titleController.text, subTitle: descriptController.text,
-          dateTime: DateTime.now().toLocal().toString(),
+          title: titleController.text,
+          subTitle: descriptController.text,
+          dateTime: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          ).toString().split(" ").first,
           taskId: id
         ));
       } else {
