@@ -30,7 +30,6 @@ class ExpenseProvider extends ChangeNotifier {
       totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
     },);
     getAllBudgets();
-    notifyListeners();
   }
 
   // start of budget fetching
@@ -82,6 +81,16 @@ class ExpenseProvider extends ChangeNotifier {
       ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN : budget.DateTime,
     },);
     await getAllBudgets();
+  }
+
+  // update budget event
+  Future<void> updateBudget(BudgetModel budget) async{
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    await database.update(ExpenseDbHelper.BUDGET_TABLE, {
+      ExpenseDbHelper.BUDGET_COLUMN: budget.budget,
+      ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN: budget.DateTime
+    }, where: "${ExpenseDbHelper.ID_COLUMN} == ?", whereArgs: [budget.id]);
+    getAllBudgets();
   }
 
   // update expenses
