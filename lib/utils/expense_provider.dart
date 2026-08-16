@@ -29,7 +29,7 @@ class ExpenseProvider extends ChangeNotifier {
       _expensesList.add(ExpenseModel.fromMap(expense));
       totalSpent = totalSpent + expense[ExpenseDbHelper.EXPENSES_COLUMN];
     },);
-    getAllBudgets();
+    await getAllBudgets();
   }
 
   // start of budget fetching
@@ -90,7 +90,7 @@ class ExpenseProvider extends ChangeNotifier {
       ExpenseDbHelper.BUDGET_COLUMN: budget.budget,
       ExpenseDbHelper.BUDGET_INIT_DATE_TIME_COLUMN: budget.DateTime
     }, where: "${ExpenseDbHelper.ID_COLUMN} == ?", whereArgs: [budget.id]);
-    getAllBudgets();
+    await getAllBudgets();
   }
 
   // update expenses
@@ -101,6 +101,14 @@ class ExpenseProvider extends ChangeNotifier {
       ExpenseDbHelper.EXPENSES_COLUMN : expense.expense,
       ExpenseDbHelper.CATEGORY_COLUMN : expense.category
     }, where: "${ExpenseDbHelper.ID_COLUMN} == ?", whereArgs: [expense.id]);
+    await getAllExpenses();
+  }
+
+  // delete expenses event
+  Future<void> deleteExpense(int id) async{
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    await database.delete(ExpenseDbHelper.TABLE_NAME,
+        where: "${ExpenseDbHelper.ID_COLUMN}  == ?", whereArgs: [id]);
     await getAllExpenses();
   }
 }
