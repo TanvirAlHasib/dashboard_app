@@ -46,7 +46,7 @@ class ExpensesScreen extends StatelessWidget {
                           ),),
                         FilledButton(
                             onPressed: (){
-                              addBudget(context);
+                              addBudget(context: context, flag: true);
                             },
                             style: FilledButton.styleFrom(
                               backgroundColor: Colors.blue.shade800,
@@ -128,46 +128,24 @@ class ExpensesScreen extends StatelessWidget {
                       const SizedBox(
                         height: 0,
                       ),
-                      Row(
-                        spacing: 5,
-                        children: [
-                          Expanded(
-                            child: FilledButton(
-                                onPressed: () { },
-                                style: FilledButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadiusGeometry.circular(17),
-                                        side: BorderSide(
-                                            strokeAlign: BorderSide.strokeAlignOutside,
-                                            color: Colors.blue.shade50,
-                                            width: 0.6
-                                        )
-                                    )
-                                ),
-                                child: Text("Add Budget", style: TextStyle(color: Colors.grey.shade700),)
-                            ),
+                      FilledButton(
+                          onPressed: () {
+                            addBudget(context: context, id: budgetList[0].id, flag: false);
+                          },
+                          style: FilledButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: Colors.white,
+                              minimumSize: Size.fromHeight(40),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusGeometry.circular(17),
+                                  side: BorderSide(
+                                      strokeAlign: BorderSide.strokeAlignOutside,
+                                      color: Colors.blue.shade50,
+                                      width: 0.6
+                                  )
+                              )
                           ),
-                          Expanded(
-                            child: FilledButton(
-                                onPressed: () { },
-                                style: FilledButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadiusGeometry.circular(17),
-                                        side: BorderSide(
-                                            strokeAlign: BorderSide.strokeAlignOutside,
-                                            color: Colors.blue.shade50,
-                                            width: 0.6
-                                        )
-                                    )
-                                ),
-                                child: Text("Update Budget", style: TextStyle(color: Colors.grey.shade700),)
-                            ),
-                          ),
-                        ],
+                          child: Text("Update Budget", style: TextStyle(color: Colors.grey.shade700),)
                       ),
                     ],
                   ),
@@ -302,7 +280,7 @@ class ExpensesScreen extends StatelessWidget {
     );
   }
 
-  void addBudget(BuildContext context){
+  void addBudget({required BuildContext context, int ? id, required  bool flag}){
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -323,7 +301,7 @@ class ExpensesScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "Add Monthly Budget",
+                  flag ? "Add Monthly Budget" : "Update Monthly Budget",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight(600),
@@ -365,10 +343,14 @@ class ExpensesScreen extends StatelessWidget {
                                   DateTime.now().month,
                                   DateTime.now().day
                               ).toIso8601String();
-                              // insert budget to the budget table
-                              await context.read<ExpenseProvider>().insertBudget(BudgetModel(
+                              // insert or update budget to the budget table
+                              flag ? await context.read<ExpenseProvider>().insertBudget(BudgetModel(
                                   budget: int.parse(budgetController.text),
                                   DateTime: dateTime
+                              )) : await context.read<ExpenseProvider>().updateBudget(BudgetModel(
+                                  budget: int.parse(budgetController.text),
+                                  DateTime: dateTime,
+                                  id: id,
                               ));
 
                               budgetController.clear();
@@ -382,7 +364,7 @@ class ExpensesScreen extends StatelessWidget {
                               )
                           ),
                           child: Text(
-                              "Add"
+                              flag ? "Add" : "Update"
                           )
                       ),
                     )
