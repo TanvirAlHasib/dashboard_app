@@ -1,6 +1,8 @@
 import 'package:dashboard/models/budget_model.dart';
 import 'package:dashboard/models/expense_model.dart';
 import 'package:dashboard/utils/expense_provider.dart';
+import 'package:dashboard/utils/showModalBottomSheet.dart';
+import 'package:dashboard/utils/toast.dart';
 import 'package:dashboard/widgets/cardWidget.dart';
 import 'package:dashboard/widgets/floatingActionButtonWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +17,9 @@ class ExpensesScreen extends StatelessWidget {
 
   TextEditingController budgetController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "expenses");
+  final Showmodalbottomsheet  _showmodalbottomsheet = Showmodalbottomsheet();
 
   @override
   Widget build(BuildContext context) {
@@ -237,8 +242,24 @@ class ExpensesScreen extends StatelessWidget {
                               trailing: Row(
                                 mainAxisSize: .min,
                                 children: [
-                                  IconButton(onPressed: () { }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 23,)),
-                                  IconButton(onPressed: () { }, icon: Icon(Icons.edit_note, color: Colors.green.shade700, size: 25,)),
+                                  IconButton(
+                                    onPressed: () {
+                                      Toast(
+                                        context).show("Do you want to delete the expense ?",
+                                        () async => await provider.deleteExpense(expenseList[index].id!),
+                                      );
+                                  }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 23,)),
+                                  IconButton(onPressed: () {
+                                    _floatingactionbuttonwidget.titleController.text = expenseList[index].title;
+                                    _floatingactionbuttonwidget.descriptController.text = expenseList[index].expense.toString();
+                                    _showmodalbottomsheet.show_ModalBottomSheet(
+                                        context: context,
+                                        titleController: _floatingactionbuttonwidget.titleController,
+                                        descriptController: _floatingactionbuttonwidget.descriptController,
+                                        flag: false,
+                                        flagFrom: "expenses"
+                                    );
+                                  }, icon: Icon(Icons.edit_note, color: Colors.green.shade700, size: 25,)),
                                 ],
                               ),
                             ),
