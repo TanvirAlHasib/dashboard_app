@@ -150,7 +150,10 @@ class ExpensesScreen extends StatelessWidget {
                                   )
                               )
                           ),
-                          child: Text("Update Budget", style: TextStyle(color: Colors.grey.shade700),)
+                          child: Text("Update Budget", style: TextStyle(
+                            color: Colors.grey.shade700,
+                            fontWeight: FontWeight(600)
+                          ),)
                       ),
                     ],
                   ),
