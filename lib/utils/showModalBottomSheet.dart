@@ -36,97 +36,101 @@ class Showmodalbottomsheet {
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Column(
-            children: [
-              Text(
-                getBottomSheetTitle(flagFrom, flag),
-                style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight(600),
-              ),),
-              const SizedBox(
-                height: 20,
-              ),
-              Textformfieldwidget(icon: Icons.title,
-                textEditingController: titleController,
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              DropdownButton<String>(
-                value: selectedCategory,
-                elevation: 3,
-                isExpanded: true,
-                dropdownColor: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                underline: Container(
-                  height: 1,
-                  color: Colors.blue.shade400,
-                ),
-                items: categoryList.map((item) {
-                  return DropdownMenuItem(
-                    value: item,
-                    child: Text(item),
-                  );
-                },).toList(),
-                onChanged: (value) {
-                  selectedCategory = value!;
-                },
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ///TODO later i will fix the prefix icon issue in multiline textFormField by row widget
-              Textformfieldwidget(icon: Icons.subtitles, maxLines: 4,
-                textInputType: TextInputType.multiline,
-                textEditingController: descriptController,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                spacing: 5,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return Column(
                 children: [
-                  Expanded(
-                    child: OutlinedButton(
-                        onPressed: () {
-                          context.pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                            textStyle: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight(600)
-                            )
-                        ),
-                        child: Text("Cancel")
-                    ),
+                  Text(
+                    getBottomSheetTitle(flagFrom, flag),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight(600),
+                    ),),
+                  const SizedBox(
+                    height: 20,
                   ),
-                  Expanded(
-                    child: OutlinedButton(
-                        onPressed: () async{
-                          if(_formKey.currentState!.validate()){
+                  Textformfieldwidget(icon: Icons.title,
+                    textEditingController: titleController,
+                  ),
+                  const SizedBox(
+                    height: 13,
+                  ),
+                  DropdownButton<String>(
+                    value: selectedCategory,
+                    elevation: 3,
+                    isExpanded: true,
+                    dropdownColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    underline: Container(
+                      height: 1,
+                      color: Colors.blue.shade400,
+                    ),
+                    items: categoryList.map((item) {
+                      return DropdownMenuItem(
+                        value: item,
+                        child: Text(item),
+                      );
+                    },).toList(),
+                    onChanged: (value) {
+                      setState(() => selectedCategory = value!);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ///TODO later i will fix the prefix icon issue in multiline textFormField by row widget
+                  Textformfieldwidget(icon: Icons.subtitles, maxLines: 4,
+                    textInputType: TextInputType.multiline,
+                    textEditingController: descriptController,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    spacing: 5,
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            style: OutlinedButton.styleFrom(
+                                textStyle: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight(600)
+                                )
+                            ),
+                            child: Text("Cancel")
+                        ),
+                      ),
+                      Expanded(
+                        child: OutlinedButton(
+                            onPressed: () async{
+                              if(_formKey.currentState!.validate()){
 
-                            await makeTheAction(flagFrom, flag, context, titleController, descriptController);
+                                await makeTheAction(flagFrom, flag, context, titleController, descriptController);
 
-                            titleController.clear();
-                            descriptController.clear();
-                            context.pop();
-                          }
-                        },
-                        style: OutlinedButton.styleFrom(
-                            textStyle: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight(600)
+                                titleController.clear();
+                                descriptController.clear();
+                                context.pop();
+                              }
+                            },
+                            style: OutlinedButton.styleFrom(
+                                textStyle: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight(600)
+                                )
+                            ),
+                            child: Text(
+                                flag ? "Add" : "Update"
                             )
                         ),
-                        child: Text(
-                            flag ? "Add" : "Update"
-                        )
-                    ),
-                  )
+                      )
+                    ],
+                  ),
                 ],
-              ),
-            ],
+              );
+            },
           ),
         ),
       );
