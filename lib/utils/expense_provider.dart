@@ -12,6 +12,7 @@ class ExpenseProvider extends ChangeNotifier {
 
   static num totalSpent = 0;
   static num totalBudget = 0;
+  static bool categoryFlag = false;
   final List<ExpenseModel> _expensesList = [];
   final List<BudgetModel> _budgetList = [];
   List<ExpenseModel> get getExpensesList => _expensesList;
@@ -23,6 +24,7 @@ class ExpenseProvider extends ChangeNotifier {
   Future<void> getAllExpenses() async{
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _expensesList.clear();
+    categoryFlag = false;
     totalSpent = 0;
     List<Map<String, dynamic>> mapExpenses = await database.query(ExpenseDbHelper.TABLE_NAME);
     mapExpenses.forEach((expense) {
@@ -114,8 +116,13 @@ class ExpenseProvider extends ChangeNotifier {
 
   // search by category
   Future<void> getExpenseByCategory(String category) async{
+    if(category.contains("All")){
+      getAllExpenses();
+      return ;
+    }
     Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
     _expensesList.clear();
+    categoryFlag = true;
     List<Map<String, dynamic>> mapCategoryList = await database.query(ExpenseDbHelper.TABLE_NAME,
         where: "${ExpenseDbHelper.CATEGORY_COLUMN} == ?", whereArgs: [category]);
     mapCategoryList.forEach((expense) {

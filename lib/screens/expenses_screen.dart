@@ -15,7 +15,7 @@ import '../widgets/textFormFieldWidget.dart';
 class ExpensesScreen extends StatelessWidget {
   ExpensesScreen({super.key});
 
-  TextEditingController budgetController = TextEditingController();
+  final TextEditingController budgetController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "expenses");
@@ -34,7 +34,7 @@ class ExpensesScreen extends StatelessWidget {
             List<ExpenseModel> expenseList = provider.getExpensesList;
             List<BudgetModel> budgetList = provider.getBudgetList;
 
-            if(expenseList.isEmpty){
+            if(expenseList.isEmpty && (ExpenseProvider.categoryFlag != true)){
               return SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -169,6 +169,12 @@ class ExpensesScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
+                      InkWell(
+                          onTap: () async{
+                            await provider.getExpenseByCategory("All");
+                          },
+                          child: Cardwidget(text: "All")
+                      ),
                       InkWell(
                           onTap: () async{
                             await provider.getExpenseByCategory("Food");
@@ -337,8 +343,25 @@ class ExpensesScreen extends StatelessWidget {
   // list view builder for expense list
   Widget ListViewBulder(List<ExpenseModel> expenseList, ExpenseProvider provider){
     return ListView.builder(
-      itemCount: expenseList.length,
+      itemCount: expenseList.isNotEmpty ? expenseList.length : 1,
       itemBuilder: (context, index) {
+        if(expenseList.isEmpty && ExpenseProvider.categoryFlag){
+          return SizedBox(
+            width: double.infinity,
+            height: 200,
+            child: Column(
+              crossAxisAlignment: .center,
+              mainAxisAlignment: .center,
+              spacing: 8,
+              children: [
+                Text("No Expenses yet.",textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16
+                  ),)
+              ],
+            ),
+          );
+        }
         return Column(
           children: [
             Padding(
