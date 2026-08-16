@@ -170,8 +170,7 @@ class ExpensesScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       InkWell(
-                          onTap: () { print(ExpenseProvider.totalBudget);
-                            print(ExpenseProvider.totalSpent);},
+                          onTap: () { },
                           child: Cardwidget(text: "Food")
                       ),
                       InkWell(
@@ -200,81 +199,7 @@ class ExpensesScreen extends StatelessWidget {
                   height: 12,
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: expenseList.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: ListTile(
-                              leading: Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).cardColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Icon(Icons.money, color: Colors.blue.shade500,),
-                              ),
-                              title: Row(
-                                spacing: 5,
-                                children: [
-                                  Text("-${expenseList[index].expense} tk"),
-                                  Expanded(
-                                    child: Center(
-                                      child: Card(
-                                        elevation: 0,
-                                        color: Colors.amber.shade50,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(5)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4),
-                                          child: Text(expenseList[index].category, overflow: TextOverflow.ellipsis, style: TextStyle(
-                                              fontSize: 12
-                                          ),),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              subtitle: Text(expenseList[index].title),
-                              trailing: Row(
-                                mainAxisSize: .min,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Toast(
-                                        context).show("Do you want to delete the expense ?",
-                                        () async => await provider.deleteExpense(expenseList[index].id!),
-                                      );
-                                  }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 23,)),
-                                  IconButton(onPressed: () {
-                                    _floatingactionbuttonwidget.titleController.text = expenseList[index].title;
-                                    _floatingactionbuttonwidget.descriptController.text = expenseList[index].expense.toString();
-                                    Showmodalbottomsheet.id = expenseList[index].id!;
-                                    _showmodalbottomsheet.show_ModalBottomSheet(
-                                        context: context,
-                                        titleController: _floatingactionbuttonwidget.titleController,
-                                        descriptController: _floatingactionbuttonwidget.descriptController,
-                                        flag: false,
-                                        flagFrom: "expenses"
-                                    );
-                                  }, icon: Icon(Icons.edit_note, color: Colors.green.shade700, size: 25,)),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Divider(
-                              color: Colors.grey.shade300,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                  child: ListViewBulder(expenseList, provider),
                 ),
               ],
             );
@@ -302,6 +227,7 @@ class ExpensesScreen extends StatelessWidget {
     );
   }
 
+  // add budget functionality
   void addBudget({required BuildContext context, int ? id, required  bool flag}){
     showModalBottomSheet(
       context: context,
@@ -395,6 +321,85 @@ class ExpensesScreen extends StatelessWidget {
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  // list view builder for expense list
+  Widget ListViewBulder(List<ExpenseModel> expenseList, ExpenseProvider provider){
+    return ListView.builder(
+      itemCount: expenseList.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: ListTile(
+                leading: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(Icons.money, color: Colors.blue.shade500,),
+                ),
+                title: Row(
+                  spacing: 5,
+                  children: [
+                    Text("-${expenseList[index].expense} tk"),
+                    Expanded(
+                      child: Center(
+                        child: Card(
+                          elevation: 0,
+                          color: Colors.amber.shade50,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(5)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4),
+                            child: Text(expenseList[index].category, overflow: TextOverflow.ellipsis, style: TextStyle(
+                                fontSize: 12
+                            ),),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                subtitle: Text(expenseList[index].title),
+                trailing: Row(
+                  mainAxisSize: .min,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Toast(
+                              context).show("Do you want to delete the expense ?",
+                                () async => await provider.deleteExpense(expenseList[index].id!),
+                          );
+                        }, icon: Icon(Icons.delete, color: Colors.red.shade700, size: 23,)),
+                    IconButton(onPressed: () {
+                      _floatingactionbuttonwidget.titleController.text = expenseList[index].title;
+                      _floatingactionbuttonwidget.descriptController.text = expenseList[index].expense.toString();
+                      Showmodalbottomsheet.id = expenseList[index].id!;
+                      _showmodalbottomsheet.show_ModalBottomSheet(
+                          context: context,
+                          titleController: _floatingactionbuttonwidget.titleController,
+                          descriptController: _floatingactionbuttonwidget.descriptController,
+                          flag: false,
+                          flagFrom: "expenses"
+                      );
+                    }, icon: Icon(Icons.edit_note, color: Colors.green.shade700, size: 25,)),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Divider(
+                color: Colors.grey.shade300,
+              ),
+            ),
+          ],
         );
       },
     );
