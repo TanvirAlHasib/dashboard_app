@@ -111,4 +111,16 @@ class ExpenseProvider extends ChangeNotifier {
         where: "${ExpenseDbHelper.ID_COLUMN}  == ?", whereArgs: [id]);
     await getAllExpenses();
   }
+
+  // search by category
+  Future<void> getExpenseByCategory(String category) async{
+    Database database = await ExpenseDbHelper.getInstance.getExpenseDB();
+    _expensesList.clear();
+    List<Map<String, dynamic>> mapCategoryList = await database.query(ExpenseDbHelper.TABLE_NAME,
+        where: "${ExpenseDbHelper.CATEGORY_COLUMN} == ?", whereArgs: [category]);
+    mapCategoryList.forEach((expense) {
+      _expensesList.add(ExpenseModel.fromMap(expense));
+    },);
+    notifyListeners();
+  }
 }
