@@ -170,19 +170,27 @@ class ExpensesScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       InkWell(
-                          onTap: () { },
+                          onTap: () async{
+                            await provider.getExpenseByCategory("Food");
+                          },
                           child: Cardwidget(text: "Food")
                       ),
                       InkWell(
-                          onTap: () { },
+                          onTap: () async{
+                            await provider.getExpenseByCategory("Travel");
+                          },
                           child: Cardwidget(text: "Travel")
                       ),
                       InkWell(
-                          onTap: () { },
+                          onTap: () async{
+                            await provider.getExpenseByCategory("Bills");
+                          },
                           child: Cardwidget(text: "Bills")
                       ),
                       InkWell(
-                          onTap: () { },
+                          onTap: () async{
+                            await provider.getExpenseByCategory("Shopping");
+                          },
                           child: Cardwidget(text: "Shopping")
                       ),
                     ],
