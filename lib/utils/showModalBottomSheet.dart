@@ -22,7 +22,11 @@ class Showmodalbottomsheet {
     required String flagFrom,
     List<String> ? categoryList,
   }){
-    selectedCategory = selectedCategory.isEmpty ? categoryList!.first : selectedCategory;
+    if(selectedCategory.isNotEmpty){
+      if(!categoryList!.contains(selectedCategory)){
+        selectedCategory = categoryList.first;
+      }
+    }
     showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) {
       return Form(
         key: _formKey,
