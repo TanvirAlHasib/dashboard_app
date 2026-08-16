@@ -12,6 +12,7 @@ class TaskDbHelper {
   static final String TITLE_COLUMN = "title";
   static final String SUBTITLE_COLUMN = "subTitle";
   static final String DATE_TIME_COLUMN = "dateTime";
+  static final String CATEGORY_COLUMN = "category";
   static final String COMPLETED_OR_NOT_COLUMN = "completed";
   static final String TASK_DB_TABLE_NAME = "task";
   Database? taskDB;
@@ -37,6 +38,7 @@ class TaskDbHelper {
           $TITLE_COLUMN TEXT NOT NULL,
           $SUBTITLE_COLUMN TEXT,
           $DATE_TIME_COLUMN TEXT NOT NULL,
+          $CATEGORY_COLUMN TEXT NOT NULL,
           $COMPLETED_OR_NOT_COLUMN INTEGER NOT NULL)
           '''
       );},

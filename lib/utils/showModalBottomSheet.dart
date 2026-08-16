@@ -180,6 +180,7 @@ class Showmodalbottomsheet {
             DateTime.now().day,
           ).toString().split(" ").first,
           completed: 0,
+          category: selectedCategory
         )) : await context.read<TaskProvider>().updateTask(TaskModel(
           title: titleController.text,
           subTitle: descriptController.text,
@@ -188,6 +189,7 @@ class Showmodalbottomsheet {
             DateTime.now().month,
             DateTime.now().day,
           ).toString().split(" ").first,
+          category: selectedCategory,
           taskId: id
         ));
       } else {
