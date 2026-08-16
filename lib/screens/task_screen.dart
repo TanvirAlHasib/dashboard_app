@@ -12,6 +12,7 @@ class TaskScreen extends StatelessWidget {
 
   final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
   final Showmodalbottomsheet  _showmodalbottomsheet = Showmodalbottomsheet();
+  final List<String> categoryList = ["Food", "Travel", "Bills", "Shopping"];
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +170,8 @@ class TaskScreen extends StatelessWidget {
                                         _showmodalbottomsheet.show_ModalBottomSheet(
                                             context: context, titleController: _floatingactionbuttonwidget.titleController,
                                             descriptController: _floatingactionbuttonwidget.descriptController,
-                                            flag: false, flagFrom: "task"
+                                            flag: false, flagFrom: "task",
+                                            categoryList: categoryList
                                         );
                                       }, icon: Icon(Icons.edit_note, color: Colors.green.shade600, size: 23,),
                                     ),
@@ -186,7 +188,7 @@ class TaskScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "task"),
+      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "task", categoryList: categoryList,),
     );
   }
 

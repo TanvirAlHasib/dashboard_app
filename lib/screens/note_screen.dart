@@ -13,7 +13,8 @@ class NoteScreen extends StatelessWidget {
   NoteScreen({super.key});
 
   final TextEditingController searchController = TextEditingController();
-  final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "note",);
+  final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "note");
+  final List<String> categoryList = ["Work", "Personal", "Ideas"];
 
   @override
   Widget build(BuildContext context) {
@@ -166,12 +167,13 @@ class NoteScreen extends StatelessWidget {
                                     _floatingactionbuttonwidget.titleController.text = title;
                                     _floatingactionbuttonwidget.descriptController.text = desc;
                                     Showmodalbottomsheet.id = noteList[index].id;
-                                    Showmodalbottomsheet.category = noteList[index].category;
+                                    //Showmodalbottomsheet.category = noteList[index].category;
                                     Showmodalbottomsheet().show_ModalBottomSheet(
                                         context: context,
                                         titleController: _floatingactionbuttonwidget.titleController,
                                         descriptController: _floatingactionbuttonwidget.descriptController,
-                                      flag: false, flagFrom: "note"
+                                      flag: false, flagFrom: "note",
+                                      categoryList: categoryList
                                     );
                                   },
                                   icon: Icon(Icons.edit_note_outlined, color: Colors.green.shade500, size: 34,)
@@ -193,7 +195,7 @@ class NoteScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "note"),
+      floatingActionButton: Floatingactionbuttonwidget(flagFrom: "note", categoryList: categoryList,),
     );
   }
 

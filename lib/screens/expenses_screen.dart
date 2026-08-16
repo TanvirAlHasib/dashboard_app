@@ -17,6 +17,7 @@ class ExpensesScreen extends StatelessWidget {
 
   final TextEditingController budgetController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final List<String> categoryList = ["Food", "Travel", "Bills", "Shopping"];
 
   final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "expenses");
   final Showmodalbottomsheet  _showmodalbottomsheet = Showmodalbottomsheet();
@@ -228,7 +229,7 @@ class ExpensesScreen extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return Floatingactionbuttonwidget(flagFrom: "expenses");
+        return Floatingactionbuttonwidget(flagFrom: "expenses", categoryList: categoryList,);
 
       },),
     );
@@ -416,11 +417,12 @@ class ExpensesScreen extends StatelessWidget {
                       _floatingactionbuttonwidget.descriptController.text = expenseList[index].expense.toString();
                       Showmodalbottomsheet.id = expenseList[index].id!;
                       _showmodalbottomsheet.show_ModalBottomSheet(
-                          context: context,
-                          titleController: _floatingactionbuttonwidget.titleController,
-                          descriptController: _floatingactionbuttonwidget.descriptController,
-                          flag: false,
-                          flagFrom: "expenses"
+                        context: context,
+                        titleController: _floatingactionbuttonwidget.titleController,
+                        descriptController: _floatingactionbuttonwidget.descriptController,
+                        flag: false,
+                        flagFrom: "expenses",
+                        categoryList: categoryList
                       );
                     }, icon: Icon(Icons.edit_note, color: Colors.green.shade700, size: 25,)),
                   ],

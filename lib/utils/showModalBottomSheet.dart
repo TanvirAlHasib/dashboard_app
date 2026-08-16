@@ -16,13 +16,15 @@ class Showmodalbottomsheet {
 
   final _formKey = GlobalKey<FormState>();
   static int id = 0;
-  static String category = "N/A";
+  String ? selectedCategory;
 
   void show_ModalBottomSheet({required context, required TextEditingController titleController,
     required TextEditingController descriptController,
     required bool flag,
     required String flagFrom,
+    List<String> ? categoryList,
   }){
+    selectedCategory = categoryList!.first;
     showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) {
       return Form(
         key: _formKey,
@@ -50,6 +52,29 @@ class Showmodalbottomsheet {
               ),
               const SizedBox(
                 height: 13,
+              ),
+              DropdownButton<String>(
+                value: selectedCategory,
+                elevation: 3,
+                isExpanded: true,
+                dropdownColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                underline: Container(
+                  height: 1,
+                  color: Colors.blue.shade400,
+                ),
+                items: categoryList.map((item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Text(item),
+                  );
+                },).toList(),
+                onChanged: (value) {
+                  selectedCategory = value!;
+                },
+              ),
+              const SizedBox(
+                height: 15,
               ),
               ///TODO later i will fix the prefix icon issue in multiline textFormField by row widget
               Textformfieldwidget(icon: Icons.subtitles, maxLines: 4,
@@ -132,7 +157,7 @@ class Showmodalbottomsheet {
             description: descriptController.text,
             dateTime: DateTime.now().toLocal().toString(),
             id: id,
-            category: category
+            category: selectedCategory!
       ));
     } else if(flagFrom.contains("task")) {
         flag ? await context.read<TaskProvider>().insertTask(TaskModel(
@@ -150,11 +175,11 @@ class Showmodalbottomsheet {
         flag ? await context.read<ExpenseProvider>().insertExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            category: "Food"
+            category: selectedCategory!
         )) : await context.read<ExpenseProvider>().updateExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            category: "Food",
+            category: selectedCategory!,
             id: id
         ));
       }
