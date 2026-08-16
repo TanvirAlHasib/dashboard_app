@@ -12,7 +12,7 @@ class TaskScreen extends StatelessWidget {
 
   final Floatingactionbuttonwidget _floatingactionbuttonwidget = Floatingactionbuttonwidget(flagFrom: "task");
   final Showmodalbottomsheet  _showmodalbottomsheet = Showmodalbottomsheet();
-  final List<String> categoryList = ["Food", "Travel", "Bills", "Shopping"];
+  final List<String> categoryList = ["High", "Medium", "Low"];
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +53,9 @@ class TaskScreen extends StatelessWidget {
                               ),
                             ),
                             CircularProgressIndicator.adaptive(
-                              padding: EdgeInsets.only(bottom: 10,right: 10, top: 10, left: 15),
+                              padding: EdgeInsets.only(bottom: 12,right: 10, top: 12, left: 15),
                               value: TaskProvider.completedTask / taskList.length,
-                              strokeAlign: 4,
+                              strokeAlign: 5,
                               strokeWidth: 6,
                               backgroundColor: Colors.blue.shade100,
                               valueColor: AlwaysStoppedAnimation(Colors.blue.shade700),
@@ -123,10 +123,16 @@ class TaskScreen extends StatelessWidget {
                                 }
                               }, activeColor: Colors.blue.shade800,
                               ),
-                              title: Text(taskList[index].title, style: TextStyle(
-                                  height: 2,
-                                  fontWeight: FontWeight(500)
-                              ),),
+                              title: Row(
+                                spacing: 10,
+                                children: [
+                                  Text(taskList[index].title, style: TextStyle(
+                                      height: 2,
+                                      fontWeight: FontWeight(500)
+                                  ),),
+                                  getCategoryDesign(taskList, index),
+                                ],
+                              ),
                               horizontalTitleGap: 4,
                               subtitle: Column(
                                 spacing: 10,
@@ -167,6 +173,7 @@ class TaskScreen extends StatelessWidget {
                                         _floatingactionbuttonwidget.titleController.text = taskList[index].title;
                                         _floatingactionbuttonwidget.descriptController.text = taskList[index].subTitle;
                                         Showmodalbottomsheet.id = taskList[index].taskId!;
+                                        Showmodalbottomsheet.selectedCategory = taskList[index].category;
                                         _showmodalbottomsheet.show_ModalBottomSheet(
                                             context: context, titleController: _floatingactionbuttonwidget.titleController,
                                             descriptController: _floatingactionbuttonwidget.descriptController,
@@ -202,6 +209,32 @@ class TaskScreen extends StatelessWidget {
         //fontWeight: FontWeight(600),
         fontSize: 19,
       ),
+      ),
+    );
+  }
+
+  // getting the design according to the category
+  Widget getCategoryDesign(List<TaskModel> taskList, int index){
+    if(taskList[index].category.contains("High")){
+      return getCard(taskList, index, Colors.red.shade100, Colors.red.shade900);
+    } else if(taskList[index].category.contains("Medium")){
+      return getCard(taskList, index, Colors.amber.shade100, Colors.amber.shade900);
+    } else {
+      return getCard(taskList, index, Colors.green.shade100, Colors.green.shade900);
+    }
+  }
+
+  Widget getCard(List<TaskModel> taskList, int index, Color backgroundColor, Color textColor){
+    return Card(
+      elevation: 0,
+      color: backgroundColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(5)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+        child: Text(taskList[index].category, overflow: TextOverflow.ellipsis, style: TextStyle(
+            fontSize: 12,
+            color: textColor
+        ),),
       ),
     );
   }

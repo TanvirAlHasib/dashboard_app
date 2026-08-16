@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRoutes {
   GoRouter appRoute = GoRouter(
-    initialLocation: "note",
+    initialLocation: "task",
       routes: [
         GoRoute(
           path: "/",
