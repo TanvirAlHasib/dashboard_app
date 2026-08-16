@@ -252,6 +252,7 @@ class ExpensesScreen extends StatelessWidget {
                                   IconButton(onPressed: () {
                                     _floatingactionbuttonwidget.titleController.text = expenseList[index].title;
                                     _floatingactionbuttonwidget.descriptController.text = expenseList[index].expense.toString();
+                                    Showmodalbottomsheet.id = expenseList[index].id!;
                                     _showmodalbottomsheet.show_ModalBottomSheet(
                                         context: context,
                                         titleController: _floatingactionbuttonwidget.titleController,
