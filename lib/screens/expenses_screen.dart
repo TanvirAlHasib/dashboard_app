@@ -46,97 +46,7 @@ class ExpensesScreen extends StatelessWidget {
                           ),),
                         FilledButton(
                             onPressed: (){
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return Container(
-                                    width: double.infinity,
-                                    height: MediaQuery.of(context).size.height * 0.5 + MediaQuery.of(context).viewInsets.bottom * 0.8,
-                                    padding: const EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Form(
-                                      key: _formKey,
-                                      child: Column(
-                                        children: [
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Add Monthly Budget",
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight(600),
-                                            ),),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Textformfieldwidget(
-                                              icon: Icons.money,
-                                              textEditingController: budgetController
-                                          ),
-                                          const SizedBox(
-                                            height: 25,
-                                          ),
-                                          Row(
-                                            spacing: 5,
-                                            children: [
-                                              Expanded(
-                                                child: OutlinedButton(
-                                                    onPressed: () {
-                                                      context.pop();
-                                                    },
-                                                    style: OutlinedButton.styleFrom(
-                                                        textStyle: TextStyle(
-                                                            fontSize: 17,
-                                                            fontWeight: FontWeight(600)
-                                                        )
-                                                    ),
-                                                    child: Text("Cancel")
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: OutlinedButton(
-                                                    onPressed: () async{
-                                                      if(_formKey.currentState!.validate()){
-
-                                                        String dateTime = DateTime(
-                                                            DateTime.now().year,
-                                                            DateTime.now().month,
-                                                            DateTime.now().day
-                                                        ).toIso8601String();
-                                                        // insert budget to the budget table
-                                                        await context.read<ExpenseProvider>().insertBudget(BudgetModel(
-                                                            budget: int.parse(budgetController.text),
-                                                            DateTime: dateTime
-                                                        ));
-
-                                                        budgetController.clear();
-                                                        context.pop();
-                                                      }
-                                                    },
-                                                    style: OutlinedButton.styleFrom(
-                                                        textStyle: TextStyle(
-                                                            fontSize: 17,
-                                                            fontWeight: FontWeight(600)
-                                                        )
-                                                    ),
-                                                    child: Text(
-                                                        "Add"
-                                                    )
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
+                              addBudget(context);
                             },
                             style: FilledButton.styleFrom(
                               backgroundColor: Colors.blue.shade800,
@@ -212,6 +122,51 @@ class ExpensesScreen extends StatelessWidget {
                           Text("used of your ${ExpenseProvider.totalBudget} tk budget", style: TextStyle(
                               color: Colors.grey.shade700
                           ),)
+                        ],
+                      ),
+                      // add budget button
+                      const SizedBox(
+                        height: 0,
+                      ),
+                      Row(
+                        spacing: 5,
+                        children: [
+                          Expanded(
+                            child: FilledButton(
+                                onPressed: () { },
+                                style: FilledButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadiusGeometry.circular(17),
+                                        side: BorderSide(
+                                            strokeAlign: BorderSide.strokeAlignOutside,
+                                            color: Colors.blue.shade50,
+                                            width: 0.6
+                                        )
+                                    )
+                                ),
+                                child: Text("Add Budget", style: TextStyle(color: Colors.grey.shade700),)
+                            ),
+                          ),
+                          Expanded(
+                            child: FilledButton(
+                                onPressed: () { },
+                                style: FilledButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadiusGeometry.circular(17),
+                                        side: BorderSide(
+                                            strokeAlign: BorderSide.strokeAlignOutside,
+                                            color: Colors.blue.shade50,
+                                            width: 0.6
+                                        )
+                                    )
+                                ),
+                                child: Text("Update Budget", style: TextStyle(color: Colors.grey.shade700),)
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -344,6 +299,100 @@ class ExpensesScreen extends StatelessWidget {
       title: Text("Expenses", style: TextStyle(fontSize: 19),),
       centerTitle: true,
       backgroundColor: Theme.of(context).cardColor,
+    );
+  }
+
+  void addBudget(BuildContext context){
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.5 + MediaQuery.of(context).viewInsets.bottom * 0.8,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Add Monthly Budget",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight(600),
+                  ),),
+                const SizedBox(
+                  height: 20,
+                ),
+                Textformfieldwidget(
+                    icon: Icons.money,
+                    textEditingController: budgetController
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                          onPressed: () {
+                            context.pop();
+                          },
+                          style: OutlinedButton.styleFrom(
+                              textStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight(600)
+                              )
+                          ),
+                          child: Text("Cancel")
+                      ),
+                    ),
+                    Expanded(
+                      child: OutlinedButton(
+                          onPressed: () async{
+                            if(_formKey.currentState!.validate()){
+
+                              String dateTime = DateTime(
+                                  DateTime.now().year,
+                                  DateTime.now().month,
+                                  DateTime.now().day
+                              ).toIso8601String();
+                              // insert budget to the budget table
+                              await context.read<ExpenseProvider>().insertBudget(BudgetModel(
+                                  budget: int.parse(budgetController.text),
+                                  DateTime: dateTime
+                              ));
+
+                              budgetController.clear();
+                              context.pop();
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                              textStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight(600)
+                              )
+                          ),
+                          child: Text(
+                              "Add"
+                          )
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
