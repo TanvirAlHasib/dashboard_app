@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 import '../models/note_model.dart';
 import '../widgets/textFormFieldWidget.dart';
 
@@ -154,13 +153,22 @@ class Showmodalbottomsheet {
         flag ? await context.read<ProviderStateManagement>().insertNote(NoteModel(
           title: titleController.text,
           description: descriptController.text,
-          dateTime: DateTime.now().toLocal().toString(),
+          dateTime: DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+          ).toString().split(" ").first,
+          category: selectedCategory
         )) : await context.read<ProviderStateManagement>().updateNote(NoteModel(
             title: titleController.text,
             description: descriptController.text,
-            dateTime: DateTime.now().toLocal().toString(),
+            dateTime: DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+            ).toString().split(" ").first,
             id: id,
-            category: selectedCategory!
+            category: selectedCategory
       ));
     } else if(flagFrom.contains("task")) {
         flag ? await context.read<TaskProvider>().insertTask(TaskModel(

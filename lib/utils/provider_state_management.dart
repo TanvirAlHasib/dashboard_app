@@ -29,7 +29,7 @@ class ProviderStateManagement extends ChangeNotifier {
     database.insert(DbHelper.TABLE_NOTE, {
       DbHelper.TITLE: note.title,
       DbHelper.DESCRIPTION: note.description,
-      DbHelper.CATEGORY: note.category.isEmpty ? "N/A" : note.category,
+      DbHelper.CATEGORY: note.category,
       DbHelper.DATE_TIME : note.dateTime,
     });
     await getAllData();

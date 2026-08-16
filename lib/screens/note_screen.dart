@@ -167,7 +167,7 @@ class NoteScreen extends StatelessWidget {
                                     _floatingactionbuttonwidget.titleController.text = title;
                                     _floatingactionbuttonwidget.descriptController.text = desc;
                                     Showmodalbottomsheet.id = noteList[index].id;
-                                    //Showmodalbottomsheet.category = noteList[index].category;
+                                    Showmodalbottomsheet.selectedCategory = noteList[index].category;
                                     Showmodalbottomsheet().show_ModalBottomSheet(
                                         context: context,
                                         titleController: _floatingactionbuttonwidget.titleController,
