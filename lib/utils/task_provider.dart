@@ -36,6 +36,7 @@ class TaskProvider extends ChangeNotifier {
       TaskDbHelper.SUBTITLE_COLUMN : task.subTitle,
       TaskDbHelper.DATE_TIME_COLUMN : task.dateTime,
       TaskDbHelper.COMPLETED_OR_NOT_COLUMN : task.completed,
+      TaskDbHelper.CATEGORY_COLUMN : task.category
     });
     await getAllTask();
   }
@@ -46,7 +47,8 @@ class TaskProvider extends ChangeNotifier {
     await database.update(TaskDbHelper.TASK_DB_TABLE_NAME, {
       TaskDbHelper.TITLE_COLUMN: task.title,
       TaskDbHelper.SUBTITLE_COLUMN: task.subTitle,
-      TaskDbHelper.DATE_TIME_COLUMN: task.dateTime
+      TaskDbHelper.DATE_TIME_COLUMN: task.dateTime,
+      TaskDbHelper.CATEGORY_COLUMN : task.category
     }, where: "${TaskDbHelper.ID_COLUMN} == ?", whereArgs: [task.taskId]);
 
     await getAllTask();
