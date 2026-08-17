@@ -7,7 +7,32 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: MyAppBar(context),
+      body: Container(
+        padding: const EdgeInsets.all(17),
+        child: Column(
+          crossAxisAlignment: .start,
+          spacing: 15,
+          children: [
+            Text("Quick Actions", style: TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight(600)
+            ),),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                spacing: 5,
+                children: [
+                  getQuickActions(actionName: "Add Note", icon: Icons.sticky_note_2_sharp),
+                  getQuickActions(actionName: "Add Task", icon: Icons.add_task),
+                  getQuickActions(actionName: "Add Expense", icon: Icons.money)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -21,6 +46,35 @@ class HomeScreen extends StatelessWidget {
         //fontWeight: FontWeight(600),
         fontSize: 19,
       ),
+      ),
+    );
+  }
+
+  Widget getQuickActions({required String actionName, required IconData icon}){
+    return InkWell(
+      onTap: () { },
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(side: BorderSide(
+          color: Colors.blue.shade200,
+        ), borderRadius: BorderRadiusGeometry.circular(10)),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 20),
+          child: Column(
+            spacing: 6,
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.blue.shade50,
+                maxRadius: 25,
+                child: Icon(icon, color: Colors.blue.shade800,),
+              ),
+              Text(actionName, style: TextStyle(
+                  fontWeight: FontWeight(500)
+              ),)
+            ],
+          ),
+        ),
       ),
     );
   }
