@@ -14,19 +14,22 @@ class AppRoutes {
             return Scaffold(
               body: navigationShell,
               bottomNavigationBar: Container(
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(8), topLeft: Radius.circular(8))
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))
                 ),
                 child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
                   backgroundColor: Colors.transparent,
+                  showUnselectedLabels: false,
                   unselectedItemColor: Colors.blue.shade500,
                   selectedLabelStyle: TextStyle(
                     fontWeight: FontWeight(600)
                   ),
                   currentIndex: navigationShell.currentIndex,
                   selectedItemColor: Colors.blue.shade900,
-                  elevation: 3,
+                  elevation: 0,
                   onTap: (index) => navigationShell.goBranch(index),
                   items: const [
                     BottomNavigationBarItem(
