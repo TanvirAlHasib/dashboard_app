@@ -14,7 +14,7 @@ class Showmodalbottomsheet {
 
   final _formKey = GlobalKey<FormState>();
   static int id = 0;
-  static String selectedCategory = "";
+  static String ? selectedCategory;
 
   void show_ModalBottomSheet({required context, required TextEditingController titleController,
     required TextEditingController descriptController,
@@ -22,10 +22,8 @@ class Showmodalbottomsheet {
     required String flagFrom,
     List<String> ? categoryList,
   }){
-    if(selectedCategory.isNotEmpty){
-      if(!categoryList!.contains(selectedCategory)){
-        selectedCategory = categoryList.first;
-      }
+    if (categoryList != null && (selectedCategory == null || !categoryList.contains(selectedCategory))) {
+      selectedCategory = categoryList.first;
     }
     showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) {
       return Form(
@@ -162,7 +160,7 @@ class Showmodalbottomsheet {
             DateTime.now().month,
             DateTime.now().day,
           ).toString().split(" ").first,
-          category: selectedCategory
+          category: selectedCategory!
         )) : await context.read<ProviderStateManagement>().updateNote(NoteModel(
             title: titleController.text,
             description: descriptController.text,
@@ -172,7 +170,7 @@ class Showmodalbottomsheet {
               DateTime.now().day,
             ).toString().split(" ").first,
             id: id,
-            category: selectedCategory
+            category: selectedCategory!
       ));
     } else if(flagFrom.contains("task")) {
         flag ? await context.read<TaskProvider>().insertTask(TaskModel(
@@ -184,7 +182,7 @@ class Showmodalbottomsheet {
             DateTime.now().day,
           ).toString().split(" ").first,
           completed: 0,
-          category: selectedCategory
+          category: selectedCategory!
         )) : await context.read<TaskProvider>().updateTask(TaskModel(
           title: titleController.text,
           subTitle: descriptController.text,
@@ -193,18 +191,18 @@ class Showmodalbottomsheet {
             DateTime.now().month,
             DateTime.now().day,
           ).toString().split(" ").first,
-          category: selectedCategory,
+          category: selectedCategory!,
           taskId: id
         ));
       } else {
         flag ? await context.read<ExpenseProvider>().insertExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            category: selectedCategory
+            category: selectedCategory!
         )) : await context.read<ExpenseProvider>().updateExpense(ExpenseModel(
             title: titleController.text,
             expense: int.parse(descriptController.text),
-            category: selectedCategory,
+            category: selectedCategory!,
             id: id
         ));
       }
