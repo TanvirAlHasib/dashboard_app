@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen();
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +30,16 @@ class HomeScreen extends StatelessWidget {
                 spacing: 5,
                 children: [
                   getQuickActions(actionName: "Add Note", icon: Icons.sticky_note_2_sharp, action: () {
-                    context.pushNamed("note");
+                    final navigationShell = StatefulNavigationShell.of(context);
+                    navigationShell.goBranch(1);
                   },),
                   getQuickActions(actionName: "Add Task", icon: Icons.add_task, action: () {
-                    context.pushNamed("task");
+                    final navigationShell = StatefulNavigationShell.of(context);
+                    navigationShell.goBranch(2);
                   },),
                   getQuickActions(actionName: "Add Expense", icon: Icons.money, action: () {
-                    context.pushNamed("expenses");
+                    final navigationShell = StatefulNavigationShell.of(context);
+                    navigationShell.goBranch(3);
                   },)
                 ],
               ),
