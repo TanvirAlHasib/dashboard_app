@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen();
@@ -24,9 +25,15 @@ class HomeScreen extends StatelessWidget {
               child: Row(
                 spacing: 5,
                 children: [
-                  getQuickActions(actionName: "Add Note", icon: Icons.sticky_note_2_sharp),
-                  getQuickActions(actionName: "Add Task", icon: Icons.add_task),
-                  getQuickActions(actionName: "Add Expense", icon: Icons.money)
+                  getQuickActions(actionName: "Add Note", icon: Icons.sticky_note_2_sharp, action: () {
+                    context.pushNamed("note");
+                  },),
+                  getQuickActions(actionName: "Add Task", icon: Icons.add_task, action: () {
+                    context.pushNamed("task");
+                  },),
+                  getQuickActions(actionName: "Add Expense", icon: Icons.money, action: () {
+                    context.pushNamed("expenses");
+                  },)
                 ],
               ),
             )
@@ -50,9 +57,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget getQuickActions({required String actionName, required IconData icon}){
+  Widget getQuickActions({required String actionName, required IconData icon, required Function action}){
     return InkWell(
-      onTap: () { },
+      onTap: () {
+        action();
+      },
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(side: BorderSide(
