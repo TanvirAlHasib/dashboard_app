@@ -1,4 +1,3 @@
-import 'package:dashboard/models/task_model.dart';
 import 'package:dashboard/utils/expense_provider.dart';
 import 'package:dashboard/utils/provider_state_management.dart';
 import 'package:dashboard/utils/task_provider.dart';
@@ -79,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           spacing: 8,
                           children: [
-                            Text("${ExpenseProvider.totalSpent}", style: TextStyle(
+                            Text("${context.watch<ExpenseProvider>().totalSpent}", style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight(600)
                             ),),

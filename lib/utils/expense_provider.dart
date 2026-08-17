@@ -10,7 +10,7 @@ class ExpenseProvider extends ChangeNotifier {
     getAllExpenses();
   }
 
-  static num totalSpent = 0;
+  num totalSpent = 0;
   static num totalBudget = 0;
   static bool categoryFlag = false;
   final List<ExpenseModel> _expensesList = [];
