@@ -1,6 +1,11 @@
+import 'package:dashboard/models/task_model.dart';
+import 'package:dashboard/utils/expense_provider.dart';
+import 'package:dashboard/utils/provider_state_management.dart';
+import 'package:dashboard/utils/task_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen();
@@ -44,8 +49,8 @@ class HomeScreen extends StatelessWidget {
             Row(
               spacing: 5,
               children: [
-                getTaskNoteInfo(info: "5", title: "Today's Task", icon: Icons.add_task, subTitle: "remaining"),
-                getTaskNoteInfo(info: "3", title: "Quick Notes", icon: Icons.sticky_note_2_sharp, subTitle: "recent"),
+                getTaskNoteInfo(info: "${context.watch<TaskProvider>().taskList.length - TaskProvider.completedTask}", title: "Today's Task", icon: Icons.add_task, subTitle: "remaining"),
+                getTaskNoteInfo(info: "${context.watch<ProviderStateManagement>().getNoteList.length}", title: "Quick Notes", icon: Icons.sticky_note_2_sharp, subTitle: "in total"),
               ],
             ),
             Card(
@@ -57,7 +62,7 @@ class HomeScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 child: Row(
-                  spacing: 10,
+                  spacing: 12,
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.blue.shade50,
@@ -66,6 +71,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Column(
                       spacing: 1,
+                      crossAxisAlignment: .start,
                       children: [
                         Text("Monthly Expenses", style: TextStyle(
                           fontSize: 16,
@@ -73,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           spacing: 8,
                           children: [
-                            Text("4000", style: TextStyle(
+                            Text("${ExpenseProvider.totalSpent}", style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight(600)
                             ),),
