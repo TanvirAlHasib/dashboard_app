@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/navigation_provider.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -31,15 +33,15 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   getQuickActions(actionName: "Add Note", icon: Icons.sticky_note_2_sharp, action: () {
                     final navigationShell = StatefulNavigationShell.of(context);
-                    navigationShell.goBranch(1);
+                    context.read<NavigationProvider>().onAdd(1, context, navigationShell);
                   },),
                   getQuickActions(actionName: "Add Task", icon: Icons.add_task, action: () {
                     final navigationShell = StatefulNavigationShell.of(context);
-                    navigationShell.goBranch(2);
+                    context.read<NavigationProvider>().onAdd(2, context, navigationShell);
                   },),
                   getQuickActions(actionName: "Add Expense", icon: Icons.money, action: () {
                     final navigationShell = StatefulNavigationShell.of(context);
-                    navigationShell.goBranch(3);
+                    context.read<NavigationProvider>().onAdd(3, context, navigationShell);
                   },)
                 ],
               ),
